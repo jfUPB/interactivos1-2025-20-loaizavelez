@@ -21,3 +21,13 @@ Es imperativo diferenciar entre arte generativo y diseño generativo. El diseño
 ¿Cómo podrías aplicar lo que has visto en tu perfil profesional?
 R//
 
+
+### Actividad 3
+
+
+
+
+
+### Actividad 4
+Random: https://editor.p5js.org/loaizavelez/sketches/SMp-McXu2
+
