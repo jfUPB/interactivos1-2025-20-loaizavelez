@@ -8,7 +8,7 @@
 
 ### Actividad 06
 
-link programa: https://editor.p5js.org/loaizavelez/sketches/m7afR7SXl
+link programa: [Ver sketch en p5.js](https://editor.p5js.org/loaizavelez/sketches/m7afR7SXl)
 
 ## Codigo py
 ~~~py
