@@ -29,10 +29,73 @@ R// En proyectos futuros basados en videojuegos de ritmo, como lo puede ser Hi-F
 
 ### Actividad 3
 
+Inputs: Tocar los botones lateraes de la microboard, el sendlove dentro del programa y sacudir la microboard.
+
+Outputs: La microboard con los leds mostraba una mariposa, una cara feliz y un corazón. Deentro del programa, se loraba ver cambios de colores en el circulo.
+
+Proceso: El usuario debia presionar los botones laterales de la microboard, cada boton estaba asignado a un color y una letrab dentro del programa y también se sacude para "reiniciar" y volver al color inicial.
+
 
 
 
 
 ### Actividad 4
 Random: https://editor.p5js.org/loaizavelez/sketches/SMp-McXu2
+
+```js
+function setup() { createCanvas(400, 400); }
+function draw() { background(128,10); circle(random(150,250),random(150,250),50) }
+```
+
+<img width="1829" height="821" alt="image" src="https://github.com/user-attachments/assets/ac670c8b-589c-4329-93be-59a524325926" />
+
+
+
+Función Coseno: https://editor.p5js.org/loaizavelez/sketches/AstDdt0jA
+
+```js
+
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(128, 10);
+
+  let x = mouseX;
+  let angle = radians(mouseX);           
+  let y = 200 + cos(angle) * 50;          
+
+  circle(x, y, 50);
+}
+```
+
+<img width="1674" height="780" alt="image" src="https://github.com/user-attachments/assets/1f118243-0e35-4037-8502-e78a5cf65c29" />
+
+
+Función seno: https://editor.p5js.org/loaizavelez/sketches/NXe7-he4a
+
+```js
+
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(128, 10);
+
+  let x = mouseX;
+  let angle = radians(mouseX);           
+  let y = 200 + sin(angle) * 50;          
+
+  circle(x, y, 50);
+}
+
+```
+
+<img width="1773" height="893" alt="image" src="https://github.com/user-attachments/assets/43903e9a-fe9f-4850-b391-c44bda81bb2d" />
+
+
+
+
 
