@@ -4,7 +4,7 @@
 
 ## Actividad 05
 
-Primero buscare explicar brevemente la funcionalidad del codigo.
+### Primero buscare explicar brevemente la funcionalidad del codigo de pythoon.
 ~~~py
 from microbit import *
 
@@ -21,7 +21,43 @@ while True:
 
 ~~~
 
-En esta parte del codigo hecho en pythoon se asignan las funciones para comunicarse con la computadora y las funciones de los botones del micro:bit 
+En esta parte del codigo hecho en pythoon se asignan las funciones para comunicarse con la computadora y las funciones de los botones del micro:bit, los botes a y b, y se les asigna una letra y luego un tiempo de espera en cada acción. Se configura el protocolo de comunicación y el flujo de datos deseado. Es importante resaltar que se debe especificar que el boton ESTÁ siendo presionado, no, FUE presionado, esto se hace porque al usar el verbo en pasado el cambio de color es tan rapido que se hace imperceptible, por eso es que se usa el tiempo en presente.
+
+### explicare las partes mas importantes del cidgo en p5.js
+
+~~~js
+ function setup() {
+    createCanvas(400, 400);
+    background(220);
+    port = createSerial();
+    connectBtn = createButton("Connect to micro:bit");
+    connectBtn.position(80, 300);
+    connectBtn.mousePressed(connectBtnClick);
+  }
+~~~
+Esta sección se construye el canvas, que tan oscuro se vera el fondo, se crea el boton dentro del cnavas para la conexión del micro:bit, se ubica y se especifica el input
+
+~~~ js
+ if (port.opened() && !connectionInitialized) {
+      port.clear();
+      connectionInitialized = true;
+    }
+~~~
+
+en esta sección se ajusta el flujo de datos que llega desde el micro:bit, descartando archivos basura y se detiene el envio constante de datos para que solo ocurra cuando se reciba un input.
+
+~~~js
+ if (port.availableBytes() > 0) {
+      let dataRx = port.read(1);
+      if (dataRx == "A") {
+        fill("red");
+      } else if (dataRx == "N") {
+        fill("green");
+      }
+    }
+~~~
+
+en esta sección es donde el programa recibe el input del micro:bit haciendo que el cuadrado cambie de color 
 ## Actividad 06
 
 link programa: [Ver programa en p5.js](https://editor.p5js.org/loaizavelez/sketches/m7afR7SXl)
