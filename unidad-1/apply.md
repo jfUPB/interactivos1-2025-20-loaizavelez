@@ -2,11 +2,27 @@
 
 ## 🛠 Fase: Apply
 
-### Actividad 05
+## Actividad 05
 
+Primero buscare explicar brevemente la funcionalidad del codigo.
+~~~py
+from microbit import *
 
+uart.init(baudrate=115200)
 
-### Actividad 06
+while True:
+
+    if button_a.is_pressed():
+        uart.write('A')
+    else:
+        uart.write('N')
+
+    sleep(100)
+
+~~~
+
+En esta parte del codigo hecho en pythoon se asignan las funciones para comunicarse con la computadora y las funciones de los botones del micro:bit 
+## Actividad 06
 
 link programa: [Ver programa en p5.js](https://editor.p5js.org/loaizavelez/sketches/m7afR7SXl)
 
@@ -106,7 +122,8 @@ Para identificar que el codigo se exporto correctamente al micro:bit decidi que 
 ### Outputs:
 
 1. Con el codigo en pythoon el micro:bit muestra la imagen que se esta pidiendo, en este caso una flecha con dirección norte.
-2. Dentro de p5:js 
+2. Dentro de p5:js los outputs son el movimiento del ciruclo atraves del canvas
+3. Dentro de pythoon, las outputs son la escritura de las letras asignadas a los botnes y a la sacudida.
 
 
 
