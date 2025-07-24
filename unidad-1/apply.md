@@ -59,7 +59,7 @@ en esta sección se ajusta el flujo de datos que llega desde el micro:bit, desca
 
 en esta sección es donde el programa recibe el input del micro:bit haciendo que el cuadrado cambie de color, eto debe ser previamente programado en el micro:bit. 
 
-Luego de entender que hace cada fragmento de codigo, pasare a explicar el proceso. El usuario conecta el microbit a la computado por medio de un USB, dentro de p5.js enlaza el microbit con el programa  presiona los botones del micro:bit, la tarjeta envia una señal al computador y que es interpretada por pythoon y p5.js, ambos trabajan en conjunto, dentro de pythoon registra que información envia uno de los botones y p5.js recibe esa información para cambiar el color del cuadrado.
+Luego de entender que hace cada fragmento de codigo, pasare a explicar el proceso. El usuario conecta el microbit a la computado por medio de un USB, dentro de p5.js enlaza el microbit con el programa, el programa descarta y controla el flujo de datos proveniente del microbit y asi evitar el paso de archivos basura. Luego se presionan los botones del micro:bit, la tarjeta envia una señal al computador y que es interpretada por pythoon y p5.js, ambos trabajan en conjunto, dentro de pythoon registra que información envia uno de los botones y p5.js recibe esa información para cambiar el color del cuadrado.
 ## Actividad 06
 
 link programa: [Ver programa en p5.js](https://editor.p5js.org/loaizavelez/sketches/m7afR7SXl)
