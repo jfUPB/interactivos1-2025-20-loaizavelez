@@ -57,7 +57,7 @@ en esta sección se ajusta el flujo de datos que llega desde el micro:bit, desca
     }
 ~~~
 
-en esta sección es donde el programa recibe el input del micro:bit haciendo que el cuadrado cambie de color 
+en esta sección es donde el programa recibe el input del micro:bit haciendo que el cuadrado cambie de color, eto debe ser previamente programado en el micro:bit  
 ## Actividad 06
 
 link programa: [Ver programa en p5.js](https://editor.p5js.org/loaizavelez/sketches/m7afR7SXl)
