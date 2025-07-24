@@ -21,9 +21,9 @@ while True:
 
 ~~~
 
-En esta parte del codigo hecho en pythoon se asignan las funciones para comunicarse con la computadora y las funciones de los botones del micro:bit, los botes a y b, y se les asigna una letra y luego un tiempo de espera en cada acción. Se configura el protocolo de comunicación y el flujo de datos deseado. Es importante resaltar que se debe especificar que el boton ESTÁ siendo presionado, no, FUE presionado, esto se hace porque al usar el verbo en pasado el cambio de color es tan rapido que se hace imperceptible, por eso es que se usa el tiempo en presente.
+En esta parte del codigo hecho en pythoon se asignan las funciones para comunicarse con la computadora y las funciones de los botones del micro:bit, los botes a y b, y se les asigna una letra y luego un tiempo de espera en cada acción. Se configura el protocolo de comunicación y el flujo de datos deseado. Es importante resaltar que se debe especificar que el boton ESTÁ siendo presionado, no, FUE presionado, esto se hace porque al usar el verbo en pasado el cambio de color es tan rapido que se hace imperceptible, por eso es que se usa el tiempo en presente. Previamente debe agregarse la biblioteca para en p5.js para que el microbit funcione.
 
-### explicare las partes mas importantes del cidgo en p5.js
+### explicare las partes mas importantes del codigo en p5.js
 
 ~~~js
  function setup() {
@@ -57,7 +57,9 @@ en esta sección se ajusta el flujo de datos que llega desde el micro:bit, desca
     }
 ~~~
 
-en esta sección es donde el programa recibe el input del micro:bit haciendo que el cuadrado cambie de color, eto debe ser previamente programado en el micro:bit  
+en esta sección es donde el programa recibe el input del micro:bit haciendo que el cuadrado cambie de color, eto debe ser previamente programado en el micro:bit. 
+
+Luego de entender que hace cada fragmento de codigo, pasare a explicar el proceso. El usuario conecta el microbit a la computado por medio de un USB, dentro de p5.js enlaza el microbit con el programa  presiona los botones del micro:bit, la tarjeta envia una señal al computador y que es interpretada por pythoon y p5.js, ambos trabajan en conjunto, dentro de pythoon registra que información envia uno de los botones y p5.js recibe esa información para cambiar el color del cuadrado.
 ## Actividad 06
 
 link programa: [Ver programa en p5.js](https://editor.p5js.org/loaizavelez/sketches/m7afR7SXl)
@@ -151,15 +153,7 @@ Para identificar que el codigo se exporto correctamente al micro:bit decidi que 
 
 3. En conjunto con pythoon lee el caracter "A" y el caracter "B" si se cada uno tiene ajustado un valor en x que se mueve en positivo o negativo, desplazando el circulo.
 
-### Inputs:
 
-1. con el uso del micro:bit se presionan los botones "a" y "b" y se sacude, dentro del porgrama de p5.js, el input sería darle click al boton de conectar al micro:bit.
-
-### Outputs:
-
-1. Con el codigo en pythoon el micro:bit muestra la imagen que se esta pidiendo, en este caso una flecha con dirección norte.
-2. Dentro de p5:js los outputs son el movimiento del ciruclo atraves del canvas
-3. Dentro de pythoon, las outputs son la escritura de las letras asignadas a los botnes y a la sacudida.
 
 
 
