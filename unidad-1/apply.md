@@ -81,7 +81,8 @@ while True:
         uart.write('B')
     if accelerometer.was_gesture('shake'):
         uart.write('U')
-        sleep(100)
+
+    sleep(100)
 
 ```
 
