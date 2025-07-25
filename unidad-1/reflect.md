@@ -54,4 +54,21 @@ Alejandro y yo lo hicismos en conjunto por lo tanto el cidgo es igual, lo unico 
 
 # Feedback
 
+**Continuar: ¿Qué actividad, video o ejemplo de esta unidad te resultó más inspirador o te ayudó más a entender el potencial de los sistemas físicos interactivos?**
+R// El video que más me inspiro fue el del pianista, el hecho de que fuera en tiempo real me parecio fascinante.
+
+**Dejar de hacer: ¿Hubo alguna parte que te pareció demasiado abstracta, muy rápida o confusa? ¿Hay algo que crees que podríamos cambiar para que sea más claro?
+Empezar a hacer: ¿Qué te genera más curiosidad ahora? ¿Te gustaría explorar más sensores del micro:bit (luz, temperatura), crear visualizaciones más complejas en p5.js o ver más ejemplos de proyectos artísticos?**
+
+R// La parte más confusa es la codificación, al ser algo diferente a lo que usualmente hago y tener que aprender nuevas funciones siempre me confunde. Me produce curiosidad el saber si en algun momnento usaremos las manos o alguna camara que nos use como input.
+
+
+**Balance inspiración vs. técnica: ¿Cómo sentiste el equilibrio entre ver los videos inspiradores de la Actividad 01 y la parte técnica de conectar las herramientas en las actividades 03-06?**
+
+R// Fue un 80/20, 80 para ténica y 20 para inspiración yo siempre suelo seguir un camino y no me suelo arriesgar a hacer algo diferemt. 
+
+**Comentario adicional: ¿Hay algo más que quieras compartir sobre tu experiencia en esta unidad introductoria?**
+
+R// esto sería todo.
+
 
