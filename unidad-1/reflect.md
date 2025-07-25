@@ -51,3 +51,7 @@ R// Me gusto bastante, de hecho lo aplique en la explicación de uno de los codi
 # Coevaluación
 
 Alejandro y yo lo hicismos en conjunto por lo tanto el cidgo es igual, lo unico que cambia es en el microbit, donde yo agregue la opción de sacudirlo que al final no tuvo sentido porque no la use. Hubo una parte donde si le debia explicar el porque de la función, hubieron breves momentos de explicación lo más fundamental fue cuando hablamos de agregar la función de la sacudidad, primero le explique que debiamos agregar la función en el microbit y asignarle el caracter, luego intente agregar dentro de p5 para que leyera el caracter y volviera al origen. 
+
+# Feedback
+
+
