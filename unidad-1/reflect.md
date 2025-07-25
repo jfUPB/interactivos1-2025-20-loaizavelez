@@ -4,7 +4,7 @@
 
 # Autoevaluación.
 
-# Parte 1: recuperación de conocimiento (Retrieval Practice)
+ Parte 1: recuperación de conocimiento (Retrieval Practice)
 
 
 **Basándote en los ejemplos que vimos de sistemas físicos interactivos al iniciar el curso, describe las tres características que definen a un sistema físico interactivo.**
@@ -27,24 +27,24 @@ R// el arte tradicional puede ser replicable, no seran copias tan exactas pero s
 
 R// en el microbit se debe programar las funciones de los botones a y b y s eles asigna un caracter y un tiempo de espera, se debe decidir que verbo usar si es el "is" o el "was" para que al momento de ser presionado mantenga el color o solo cambie por un tiempo especifico.
 
-## Parte 2.
+**Parte 2.**
 
-## ¿Qué fue más desafiante para ti en esta unidad: la parte conceptual (entender qué es un sistema físico interactivo) o la parte técnica (hacer que el micro:bit y p5.js se comunicaran)? ¿Por qué?
+**¿Qué fue más desafiante para ti en esta unidad: la parte conceptual (entender qué es un sistema físico interactivo) o la parte técnica (hacer que el micro:bit y p5.js se comunicaran)? ¿Por qué?**
 
 R// Más que todo la parte tecnica, aprender las funciones y optimizar el codigo, entender que hacia cada cosa era bastante estresanste.
 
 
-## Describe el momento “¡Aha!” que tuviste cuando lograste que una acción en el micro:bit (presionar un botón, sacudirlo) tuviera un efecto visible en el canvas de p5.js por primera vez. ¿Qué fue lo que entendiste en ese instante?
+**Describe el momento “¡Aha!” que tuviste cuando lograste que una acción en el micro:bit (presionar un botón, sacudirlo) tuviera un efecto visible en el canvas de p5.js por primera vez. ¿Qué fue lo que entendiste en ese instante?**
 
 R// Seria ese dia que el ciruclo hizo el movimiento del coseno, fue divertido e intersante que todo lo que se aplico tuviera un sentido logico y no fuera porque si.
 
 
-## Al inicio de la unidad te pregunté: “¿Este curso para qué me sirve?”. Después de experimentar y construir tu primer prototipo, ¿Cómo ha cambiado o se ha vuelto más concreta tu respuesta a esa pregunta?
+**Al inicio de la unidad te pregunté: “¿Este curso para qué me sirve?”. Después de experimentar y construir tu primer prototipo, ¿Cómo ha cambiado o se ha vuelto más concreta tu respuesta a esa pregunta?**
 
 R// ya la pregunta cambio de ¿para que me srive? a ¿para que lo aplico? son herramientas que pueden dar mucho juego a la hora de ser inmersivo pero requeire de una creatividad que se podria decir que me falta.
 
 
-## El tutorial de la Actividad 05 te llevó paso a paso. ¿Cómo te sentiste con ese método de aprendizaje? ¿Te dio seguridad o preferirías haberlo intentado por tu cuenta desde el principio?
+**El tutorial de la Actividad 05 te llevó paso a paso. ¿Cómo te sentiste con ese método de aprendizaje? ¿Te dio seguridad o preferirías haberlo intentado por tu cuenta desde el principio?**
 
 R// Me gusto bastante, de hecho lo aplique en la explicación de uno de los codigos, explicarlo bloque por bloque y paso a paso y que función hace cada linea es intersante y facil de seguir.
 
