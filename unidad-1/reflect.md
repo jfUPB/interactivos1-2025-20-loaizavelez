@@ -47,3 +47,7 @@ R// ya la pregunta cambio de ¿para que me srive? a ¿para que lo aplico? son he
 ## El tutorial de la Actividad 05 te llevó paso a paso. ¿Cómo te sentiste con ese método de aprendizaje? ¿Te dio seguridad o preferirías haberlo intentado por tu cuenta desde el principio?
 
 R// Me gusto bastante, de hecho lo aplique en la explicación de uno de los codigos, explicarlo bloque por bloque y paso a paso y que función hace cada linea es intersante y facil de seguir.
+
+# Coevaluación
+
+Alejandro y yo lo hicismos en conjunto por lo tanto el cidgo es igual, lo unico que cambia es en el microbit, donde yo agregue la opción de sacudirlo que al final no tuvo sentido porque no la use. Hubo una parte donde si le debia explicar el porque de la función, hubieron breves momentos de explicación lo más fundamental fue cuando hablamos de agregar la función de la sacudidad, primero le explique que debiamos agregar la función en el microbit y asignarle el caracter, luego intente agregar dentro de p5 para que leyera el caracter y volviera al origen. 
