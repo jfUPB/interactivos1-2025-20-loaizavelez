@@ -42,13 +42,35 @@ def update(self):
                 display.set_pixel(self.pixelX,self.pixelY,self.pixelState)
 ```
 
-En esta parte el led actualiza su estado, lo que le permite alternar entre encendido y apagado, en esta parte del codigo se analiza si el led cambio de estado con suficiente tiempo, si se elimina esta verificación, el led se vuelve errático, cambiando de estado descontroladamente. []
+
+
+En esta parte el led actualiza su estado, lo que le permite alternar entre encendido y apagado, en esta parte del codigo se analiza si el led cambio de estado con suficiente tiempo, si se elimina esta verificación, el led se vuelve errático, cambiando de estado descontroladamente. El resto del conidiconal, el 9 es si su estado es encendido, y 0 si esta apagado. 
+
+
+https://github.com/user-attachments/assets/4e4ba3ff-7f06-4984-a482-a1ea8e78d987
+
+
+
+
 
 
 **¿Cuáles son los estados en el programa?**
-R//
+R// sus estados son, el encendido que esta representado como 9 y apagado, representado como 0. Creeria que se puede incluir el breve tiempo de espera para apagarse.
+
+
+
+https://github.com/user-attachments/assets/7b35993c-46ee-4dd9-b2cd-b1ee2e8501d7
+
+
 
 **¿Cuáles son los eventos/inputs en el programa?**
-R//
+
+R// Se pueden considerar inputs el ingresar la ubicación del led, su tiempo de espera y si esta encendido o apagado usando el constructor y modificando su estado.
+```py
+ def __init__(self,pixelX,pixelY,initState,interval):
+```
+
+Los eventos son el "WaitTimeOut" es el tiempo de espera del led, también el estado de "init" que es lo que permite arrancar, como si fuera un vehiculo, el"PixelState" es el que define si esta encendido o apagado.
 
 **¿Cuáles son las acciones en el programa?**
+R// las acciones son, el "StartTime" usado para comparar el tiempo desde que se encendio el led, el "SelfState" que define el tiempo de espera.
