@@ -122,3 +122,4 @@ while True:
     pixel5.update()
    
 ```
+Aqui se busco crear un semaforo usando la misma estructura del codigo anterior, por lo tanto las acciones y eventos son similares, lo que se busco hacer distinto fue usar el intervalo en en el que estan apagados para que uno al encenderse el otro led ya estuviera apagado.
