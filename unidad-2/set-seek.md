@@ -74,3 +74,51 @@ Los eventos son el "WaitTimeOut" es el tiempo de espera del led, también el est
 
 **¿Cuáles son las acciones en el programa?**
 R// las acciones son, el "StartTime" usado para comparar el tiempo desde que se encendio el led, el "SelfState" que define el tiempo de espera.
+
+## Actividad 2
+
+```py
+from microbit import *
+import utime
+
+class Pixel:
+    def __init__(self,pixelX,pixelY,initState,interval):
+        self.state = "Init"
+        self.startTime = 0
+        self.interval = interval
+        self.pixelX = pixelX
+        self.pixelY = pixelY
+        self.pixelState = initState
+
+    def update(self):
+
+        if self.state == "Init":
+            self.startTime = utime.ticks_ms()
+            self.state = "WaitTimeout"
+            display.set_pixel(self.pixelX,self.pixelY,self.pixelState)
+
+        elif self.state == "WaitTimeout":
+            if utime.ticks_diff(utime.ticks_ms(),self.startTime) > self.interval:
+                self.startTime = utime.ticks_ms()
+                if self.pixelState == 9:
+                    self.pixelState = 0
+                else:
+                    self.pixelState = 9
+                display.set_pixel(self.pixelX,self.pixelY,self.pixelState)
+
+pixel1 = Pixel(2,0,0,3000)
+pixel2 = Pixel(2,1,0,3000) 
+pixel3 = Pixel(2,2,0,1200)
+pixel4 = Pixel(2,3,0,1200) 
+pixel5 = Pixel(2,4,0,2000) 
+
+while True:
+    pixel1.update()
+    pixel2.update()
+    pixel3.update()
+
+    
+    pixel4.update()
+    pixel5.update()
+   
+```
