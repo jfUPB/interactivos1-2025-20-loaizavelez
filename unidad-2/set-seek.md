@@ -143,9 +143,17 @@ R//
 
 3.) Describe y aplica al menos 3 vectores de prueba para el programa. Para definir un vector de prueba debes llevar al sistema a un estado, generar los eventos y observar el estado siguiente y las acciones que ocurrirán. Por tanto, un vector de prueba tiene unas condiciones iniciales del sistema, unos resultados esperados y los resultados realmente obtenidos. Si el resultado obtenido es igual al esperado entonces el sistema pasó el vector de prueba, de lo contrario el sistema puede tener un error.
 
--Vector 1: 
+
 
 https://github.com/user-attachments/assets/59ee6a83-12a3-4107-8ce9-06a82901f978
+
+
+- Vector 1: se inicia el programa, al inicarse el programa se debe mostrar la cara feliz y se debe mostrar el tiempo que se le pide en este caso 1.5 segundos para luego pasar al cara sonriente, en un bucle entre feliz y sonriente.
+
+- Vector 2: en esta prueba se presiona el boton "a" del microbit, al preisonarse debe pasar inmediatamnete a la cara triste.
+
+- Vector 3: al estar en la cara triste se debe volver a presionar el boton "a" para que esta pace de sad face a smile face, sin embargo al hacer esta prueba, al pasar a smile face no vuelve a pasar a happy si es presionado "a" por lo tanto esta prueba no fue superada con exito.
+
 
 
 
