@@ -123,3 +123,31 @@ while True:
    
 ```
 Aqui se busco crear un semaforo usando la misma estructura del codigo anterior, por lo tanto las acciones y eventos son similares, lo que se busco hacer distinto fue usar el intervalo en en el que estan apagados para que uno al encenderse el otro led ya estuviera apagado.
+
+
+## Actividad 3
+
+1.) **Explica por qué decimos que este programa permite realizar de manera concurrente varias tareas.**
+
+R// Este programa permite realizar permite ejecutar varias acciones, la primera se podrai decir que es el parpaedo de la cara feliz, es un parpaedo sencillo y es la primera acción que se ejecuta al inicar el programa, simultaneamente se puede presionar el boton "a" para pasar a la cara triste. Estas acciones se pueden "solapar" es decir, que se pueden ejecutar al tiempo en el que una de las caras se esta proyectando sin llegar a causar daños al programa.
+
+https://github.com/user-attachments/assets/ae02bb23-cb1b-400c-a0b8-0f86a9ac3423
+
+2.) **Identifica los estados, eventos y acciones en el programa.**
+
+R//
+
+- Estados: los estados son, cara feliz, cara conetnta y cara triste.
+- Eventos: presionar el boton "a" este te llevara entre caras, triste y sonriente. Luego esta el paso del tiempo, se compara si la cara anterior ya se mostro el tiempo establecido y se pasa a la otra cara con el utime.ticks.
+- Acciones: inicar tiempo, mostrar rostros, alternar entre rostros con el paso del tiempo, alternar entre rostros al presionar el boton "a"
+
+3.) Describe y aplica al menos 3 vectores de prueba para el programa. Para definir un vector de prueba debes llevar al sistema a un estado, generar los eventos y observar el estado siguiente y las acciones que ocurrirán. Por tanto, un vector de prueba tiene unas condiciones iniciales del sistema, unos resultados esperados y los resultados realmente obtenidos. Si el resultado obtenido es igual al esperado entonces el sistema pasó el vector de prueba, de lo contrario el sistema puede tener un error.
+
+-Vector 1: 
+
+https://github.com/user-attachments/assets/59ee6a83-12a3-4107-8ce9-06a82901f978
+
+
+
+
+
