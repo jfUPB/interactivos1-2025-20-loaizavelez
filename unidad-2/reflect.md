@@ -40,8 +40,13 @@ R// un vector de prueba es una herramienta que se usa para verificar si un proce
 
 ### Actividad 7
 
+R// El codigo es funcional, no tiene ningun tipo de error, Para mostar el temporizador yo use un scroll pero el fue una secuencia de imagenes. 
+
+### Actividad 8
+- 1.) Continuar: ¿Qué actividad, explicación o ejemplo de esta unidad te ayudó más a entender el poder de las máquinas de estados? ¿Qué elemento consideras que es indispensable y debería mantener?
 
 
 
   
+
 
