@@ -29,6 +29,19 @@ R// un vector de prueba es una herramienta que se usa para verificar si un proce
   
  - Describe un error o “bug” que encontraste al implementar tu programa. ¿Cómo te ayudó pensar en términos de estados, eventos y transiciones a identificar y solucionar el problema?
    
-   R// Cuando se llega al estado blow o creeria que incluso en estados anteriores, cuando se presionan los botones para agregar o disminuir tiempo, cuando se vuelve al estado init se aplica ese tiempo 
+   R// Cuando se llega al estado blow o creeria que incluso en estados anteriores, cuando se presionan los botones para agregar o disminuir tiempo, cuando se vuelve al estado init se aplica ese tiempo que se le resto o sumo.
+
+- El problema de la bomba era complejo. ¿Qué estrategia usaste para abordarlo? ¿Comenzaste con una versión simple y añadiste funcionalidades poco a poco?
+  R// Lo que yo hago es crear las secciones e irles agregando las funciones y luego las entre lazo.
+
+- Ahora que entiendes el patrón de máquina de estados, ¿En qué otro tipo de proyecto o sistema de entretenimiento digital crees que podrías aplicarlo?
+
+  R// En proyectos como los que hay en el parque explora, donde configuras un escenario y luego puedes ver como va cambiando.
+
+### Actividad 7
+
+
+
 
   
+
