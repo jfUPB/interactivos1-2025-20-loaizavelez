@@ -424,3 +424,10 @@ while True:
 ### Actividad 05
 <img width="1061" height="861" alt="bomba 3 0 drawio" src="https://github.com/user-attachments/assets/54c32994-35ee-4b37-aa18-f3014f780271" />
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+![vectores de prueba_page-0001](https://github.com/user-attachments/assets/5386ab8d-efb1-4e4f-808d-c472e15fdb50)
+
+
+
+
