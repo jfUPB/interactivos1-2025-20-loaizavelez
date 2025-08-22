@@ -208,7 +208,7 @@ class BombTask {
       }
     }
 
-    // ARMED: ingresar contraseña, cuenta regresiva
+
     else if (this.state === 'ARMED') {
       if (keyIsPressed && key !== this.lastKey) {
         if (key === 'A' || key === 'B') {
@@ -239,7 +239,7 @@ class BombTask {
         this.lastKey = '';
       }
 
-      // cuenta regresiva
+
       if (millis() - this.startTime > 1000) {
         this.startTime = millis();
         this.count -= 1;
@@ -254,7 +254,7 @@ class BombTask {
 
     
     else if (this.state === 'EXPLODED') {
-      if (keyIsPressed && key === 'R' && key !== this.lastKey) {
+      if (keyIsPressed && key === 'T' && key !== this.lastKey) {
         this.count = 20;
         this.displayText = this.count;
         this.startTime = millis();
@@ -414,6 +414,7 @@ biblioteca
 ```html
 <script src="https://unpkg.com/@gohai/p5.webserial@^1/libraries/p5.webserial.js"></script>
 ```
+
 
 
 
