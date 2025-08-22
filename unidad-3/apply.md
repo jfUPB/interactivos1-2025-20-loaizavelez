@@ -415,7 +415,172 @@ biblioteca
 <script src="https://unpkg.com/@gohai/p5.webserial@^1/libraries/p5.webserial.js"></script>
 ```
 
+**P5JS hora con eventos genericos**
 
+```js
+let bombTask;
+let event;
+let port;
+let connectBtn;
+
+function setup() {
+  createCanvas(400, 400);
+  event = new Evento();
+  bombTask = new BombTask(event);
+
+  port = createSerial();
+  connectBtn = createButton('Connect to micro:bit');
+  connectBtn.position(80, 300);
+  connectBtn.mousePressed(connectBtnClick);
+}
+
+function draw() {
+  background(220);
+
+  if (port.availableBytes() > 0) {
+    let dataRx = port.read(1);
+    if (dataRx) {
+      event.set(dataRx.trim());
+    }
+  }
+
+  bombTask.update();
+
+  textSize(32);
+  textAlign(CENTER, CENTER);
+  text(bombTask.displayText, width / 2, height / 2);
+
+  if (!port.opened()) {
+    connectBtn.html('Connect to micro:bit');
+  } else {
+    connectBtn.html('Disconnect');
+  }
+}
+
+function keyPressed() {
+  event.set(key.toUpperCase());
+}
+
+function connectBtnClick() {
+  if (!port.opened()) {
+    port.open('MicroPython', 115200);
+  } else {
+    port.close();
+  }
+}
+
+class Evento {
+  constructor() {
+    this.value = null;
+  }
+  set(val) {
+    this.value = val;
+  }
+  clear() {
+    this.value = null;
+  }
+  read() {
+    return this.value;
+  }
+}
+
+class BombTask {
+  constructor(event) {
+    this.event = event;
+    this.PASSWORD = ['A', 'B', 'A'];
+    this.key = new Array(this.PASSWORD.length).fill('');
+    this.keyindex = 0;
+    this.count = 20;
+    this.startTime = millis();
+    this.state = 'CONFIG';
+    this.displayText = this.count;
+    this.lastKey = '';
+  }
+
+  update() {
+    let k = this.event.read();
+
+    if (this.state === 'CONFIG') {
+      if ((k && k !== this.lastKey)) {
+        if (k === 'A') {
+          this.count = min(this.count + 1, 60);
+          this.displayText = this.count;
+        }
+        if (k === 'B') {
+          this.count = max(10, this.count - 1);
+          this.displayText = this.count;
+        }
+        if (k === 'S') {
+          this.startTime = millis();
+          this.state = 'ARMED';
+        }
+        this.lastKey = k;
+        this.event.clear();
+      } else if (!k) {
+        this.lastKey = '';
+      }
+    }
+
+    else if (this.state === 'ARMED') {
+      if ((k && k !== this.lastKey)) {
+        if (k === 'A' || k === 'B') {
+          this.key[this.keyindex] = k;
+          this.keyindex++;
+        }
+
+        if (this.keyindex === this.key.length) {
+          let passIsOK = true;
+          for (let i = 0; i < this.key.length; i++) {
+            if (this.key[i] !== this.PASSWORD[i]) {
+              passIsOK = false;
+              break;
+            }
+          }
+
+          if (passIsOK) {
+            this.count = 20;
+            this.displayText = this.count;
+            this.keyindex = 0;
+            this.key = new Array(this.PASSWORD.length).fill('');
+            this.state = 'CONFIG';
+          } else {
+            this.keyindex = 0;
+            this.key = new Array(this.PASSWORD.length).fill('');
+          }
+        }
+        this.lastKey = k;
+        this.event.clear();
+      } else if (!k) {
+        this.lastKey = '';
+      }
+
+      if (millis() - this.startTime > 1000) {
+        this.startTime = millis();
+        this.count -= 1;
+        this.displayText = this.count;
+
+        if (this.count === 0) {
+          this.displayText = '💣';
+          this.state = 'EXPLODED';
+        }
+      }
+    }
+
+    else if (this.state === 'EXPLODED') {
+      if (k === 'T' && k !== this.lastKey) {
+        this.count = 20;
+        this.displayText = this.count;
+        this.startTime = millis();
+        this.state = 'CONFIG';
+        this.lastKey = k;
+        this.event.clear();
+      } else if (!k) {
+        this.lastKey = '';
+      }
+    }
+  }
+}
+```
 
 
 
