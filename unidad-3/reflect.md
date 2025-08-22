@@ -23,9 +23,46 @@
 
 **Parte 2: reflexión sobre tu proceso (Metacognición)**
 
+- ¿Qué parte del diseño de la bomba te resultó más desafiante: crear el diagrama de estados o traducir ese diagrama a código? ¿Por qué?
+
+  R// Más que todo traducirlo de pythoon a javascript, hubieron una cantidad de funcionalidades que me dejaron atascado por mucho tiempo, ademas de tener que hacer trucos porque función para presionar la tecla era constante, causando que la contraseña siempre fuera incorrecta.
+
+-Describe un error o “bug” que encontraste al implementar tu programa. ¿Cómo te ayudó pensar en términos de estados, eventos y transiciones a identificar y solucionar el problema?
+
+  R// Un error muy común fue que el tiempo auemnteba sin control, luego el tiempo disminuía sin control. Lo que pasaba es que la tecla siempre estaba presionada haciendo que en todo momento aumentara.
+
+- El problema de la bomba era complejo. ¿Qué estrategia usaste para abordarlo? ¿Comenzaste con una versión simple y añadiste funcionalidades poco a poco?
+
+  R// Empece con una bitacora donde iba anontando cada cambio y cada nueva funcionalidad para ir entendiendo que estaba bien y que estaba mal. Mientras agregaba nuevas funciones, por ejemplo sumar tiempo, detectar la contraseña y así.
+
+- Ahora que entiendes el patrón de máquina de estados, ¿En qué otro tipo de proyecto o sistema de entretenimiento digital crees que podrías aplicarlo?
+
+  R//
+
 
 
 
 ### Actividad 9
+
+- **Continuar: ¿Qué actividad, explicación o ejemplo de esta unidad te ayudó más a entender el poder de las máquinas de estados? ¿Qué elemento consideras que es indispensable y debería mantener?**
+  
+  R// La actividad de la bomba.
+
+- **Dejar de hacer: ¿Hubo algún paso o actividad que te pareció confuso? ¿Qué cambiarías o eliminarías?**
+  R// La parte más confusa fue la del serial port, pensaba que el codigo ya estaba listo pero resulta que no se comunica.
+
+- Empezar a hacer: ¿Qué te habría ayudado a entender mejor?
+  R// Saber como traducir de un idioma a otro para manejar más facil las clases.
+
+- Ritmo y dificultad: En una escala del 1 (muy fácil) al 5 (muy difícil), ¿Cómo calificarías la dificultad de pasar del análisis de un programa a diseñar y programar uno complejo? ¿Por qué?
+  
+  R// 5, el traducir de un idioma a otro, con estructuras y comportamientos diferentes es complicado, ademas el tiempo me parece que el tiempo de clase que se dio para el uso del microbit.
+
+- Comentario adicional: ¿Hay algo más que te gustaría compartir sobre tu proceso de aprendizaje en esta unidad? ¿Algún momento de frustración o de “¡Aha!” que quieras destacar?
+
+  R// En caso de usar el microbit si se puede dar tiempo de la siguiente clase para terminar y poder usar el microbit para saber si el codigo es util.
+
+  
+
 
 
