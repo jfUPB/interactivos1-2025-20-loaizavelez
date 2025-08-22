@@ -162,7 +162,7 @@ Aqui entra en armed porque muestra el mensaje hola
 let bombTask;
 
 function setup() {
-  createCanvas(200, 200);
+  createCanvas(400, 400);
   bombTask = new BombTask();
 }
 
@@ -414,6 +414,7 @@ biblioteca
 ```html
 <script src="https://unpkg.com/@gohai/p5.webserial@^1/libraries/p5.webserial.js"></script>
 ```
+
 
 
 
