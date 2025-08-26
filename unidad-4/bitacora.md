@@ -2,7 +2,7 @@
 
 ## Código
 
-[Enlace a la aplicación a modificar](URL)
+[Enlace a la aplicación a modificar](http://www.generative-gestaltung.de/2/sketches/?01_P/P_2_1_2_03)
 
 Código a modificar:
 
@@ -21,4 +21,5 @@ Código modificado:
 ## Video
 
 [Video demostratativo](URL)
+
 
