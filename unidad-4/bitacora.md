@@ -211,12 +211,225 @@ function setupGIF() {
 Código modificado:
 
 ``` js
+const STATES = {
+  WAIT_MICROBIT_CONNECTION: "WAIT_MICROBIT_CONNECTION",
+  RUNNING: "RUNNING",
+};
+let appState = STATES.WAIT_MICROBIT_CONNECTION;
 
+// Comunicación serial con micro:bit
+let port;
+let connectBtn;
+let connectionInitialized = false;
+let microBitConnected = false;
+
+// Datos gestuales desde micro:bit
+let microBitX = 0;
+let microBitY = 0;
+let microBitAState = false;
+let microBitBState = false;
+let prevmicroBitBState = false;
+
+// Parámetros visuales
+let gif;
+let canvasElement;
+let recording = false;
+let lineWidth = 3;
+let lineColor;
+let mv = true;
+let mh = true;
+let md1 = true;
+let md2 = true;
+let penCount = 1;
+let showAxes = true;
+let img;
+
+function setup() {
+  canvasElement = createCanvas(800, 800);
+  noCursor();
+  noFill();
+  lineColor = color(0);
+
+  img = createGraphics(width, height);
+  img.pixelDensity(1);
+
+  setupGIF();
+
+  port = createSerial();
+  connectBtn = createButton("Connect to micro:bit");
+  connectBtn.position(10, 10);
+  connectBtn.mousePressed(() => {
+    if (!port.opened()) {
+      port.open("MicroPython", 115200);
+      port.clear(); // ← Limpieza del buffer para evitar datos basura
+      connectionInitialized = false;
+    } else {
+      port.close();
+    }
+  });
+}
+
+function draw() {
+  background(255);
+  image(img, 0, 0);
+  img.strokeWeight(lineWidth);
+  img.stroke(lineColor);
+
+  // Conexión y lectura de datos
+  if (!port.opened()) {
+    microBitConnected = false;
+    connectBtn.html("Connect to micro:bit");
+  } else {
+    microBitConnected = true;
+    connectBtn.html("Disconnect");
+
+    if (!connectionInitialized) {
+      connectionInitialized = true;
+    }
+
+    if (port.availableBytes() > 0) {
+      let data = port.readUntil("\n");
+      let values = data.trim().split(",");
+      if (values.length === 4) {
+        microBitX = int(values[0]) + width / 2;
+        microBitY = int(values[1]) + height / 2;
+        microBitAState = values[2] === "true";
+        microBitBState = values[3] === "true";
+
+        // Evento: botón B soltado → cambia color
+        if (!microBitBState && prevmicroBitBState) {
+          lineColor = color(random(255), random(255), random(255));
+        }
+        prevmicroBitBState = microBitBState;
+      }
+    }
+  }
+
+  // Máquina de estados
+  switch (appState) {
+    case STATES.WAIT_MICROBIT_CONNECTION:
+      if (microBitConnected) {
+        appState = STATES.RUNNING;
+        print("Microbit ready to draw");
+      }
+      break;
+
+    case STATES.RUNNING:
+      if (!microBitConnected) {
+        appState = STATES.WAIT_MICROBIT_CONNECTION;
+        print("Waiting microbit connection");
+      }
+
+      // Dibujo activado por botón A
+      if (microBitAState) {
+        let w = width / penCount;
+        let h = height / penCount;
+        let x = microBitX % w;
+        let y = microBitY % h;
+        let px = x;
+        let py = y;
+
+        for (let i = 0; i < penCount; i++) {
+          for (let j = 0; j < penCount; j++) {
+            let ox = i * w;
+            let oy = j * h;
+
+            img.line(x + ox, y + oy, px + ox, py + oy);
+            if (mh || md2 && md1 && mv) img.line(w - x + ox, y + oy, w - px + ox, py + oy);
+            if (mv || md2 && md1 && mh) img.line(x + ox, h - y + oy, px + ox, h - py + oy);
+            if (mv && mh || md2 && md1) img.line(w - x + ox, h - y + oy, w - px + ox, h - py + oy);
+            if (md1 || md2 && mv && mh) img.line(y + ox, x + oy, py + ox, px + oy);
+            if (md1 && mh || md2 && mv) img.line(y + ox, w - x + oy, py + ox, w - px + oy);
+            if (md1 && mv || md2 && mh) img.line(h - y + ox, x + oy, h - py + ox, px + oy);
+            if (md1 && mv && mh || md2) img.line(h - y + ox, w - x + oy, h - py + ox, w - px + oy);
+          }
+        }
+
+        if (recording) {
+          gif.addFrame(canvasElement.canvas, { delay: 1, copy: true });
+        }
+      }
+      break;
+  }
+
+  // Visualización de ejes y cursor
+  if (showAxes) {
+    let w = width / penCount;
+    let h = height / penCount;
+
+    for (let i = 0; i < penCount; i++) {
+      for (let j = 0; j < penCount; j++) {
+        let x = i * w;
+        let y = j * h;
+
+        stroke(0, 50);
+        strokeWeight(1);
+        if (mh) line(x + w / 2, y, x + w / 2, y + h);
+        if (mv) line(x, y + h / 2, x + w, y + h / 2);
+        if (md1) line(x, y, x + w, y + h);
+        if (md2) line(x + w, y, x, y + h);
+
+        stroke(15, 233, 118, 50);
+        strokeWeight(1);
+        rect(i * w, j * h, w - 1, h - 1);
+      }
+    }
+
+    fill(lineColor);
+    noStroke();
+    ellipse(microBitX, microBitY, lineWidth + 2, lineWidth + 2);
+    stroke(0, 50);
+    noFill();
+    ellipse(microBitX, microBitY, lineWidth + 1, lineWidth + 1);
+  }
+}
+
+function keyPressed() {
+  if (key == 's' || key == 'S') saveCanvas("drawing_" + year() + nf(month(), 2) + nf(day(), 2) + "_" + nf(hour(), 2) + nf(minute(), 2) + nf(second(), 2), 'png');
+  if (keyCode == DELETE || keyCode == BACKSPACE) img.clear();
+
+  if (keyCode == RIGHT_ARROW) penCount++;
+  if (keyCode == LEFT_ARROW) penCount = max(1, penCount - 1);
+
+  if (keyCode == UP_ARROW) lineWidth++;
+  if (keyCode == DOWN_ARROW) lineWidth = max(1, lineWidth - 1);
+
+  if (key == '1') mv = !mv;
+  if (key == '2') mh = !mh;
+  if (key == '3') md1 = !md1;
+  if (key == '4') md2 = !md2;
+
+  if (key == '5') lineColor = color(0);
+  if (key == '6') lineColor = color(15, 233, 118);
+  if (key == '7') lineColor = color(245, 95, 80);
+  if (key == '8') lineColor = color(65, 105, 185);
+  if (key == '9') lineColor = color(255, 231, 108);
+  if (key == '0') lineColor = color(255);
+
+  if (key == 'd' || key == 'D') showAxes = !showAxes;
+  if (key == 'g' || key == 'G') {
+    recording = !recording;
+    if (!recording) {
+      gif.render();
+    }
+  }
+}
+
+function setupGIF() {
+  background(255);
+  gif = new GIF({
+    workers: 16,
+    quality: 10000,
+    debug: true,
+    workerScript: '../../libraries/gif.js/gif.worker.js'
+  });
+}
 ```
 
 ## Video
 
 [Video demostratativo](URL)
+
 
 
 
