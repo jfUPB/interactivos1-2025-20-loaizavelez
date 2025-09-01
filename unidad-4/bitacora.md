@@ -315,9 +315,11 @@ function draw() {
       break;
 
     case STATES.RUNNING:
-      if (!microBitConnected) {
-        appState = STATES.WAIT_MICROBIT_CONNECTION;
+      // EVENTO: estado de conexión del microbit
+      if (microBitConnected === false) {
         print("Waiting microbit connection");
+        cursor();
+        appState = STATES.WAIT_MICROBIT_CONNECTION;
       }
 
       // Dibujo activado por botón A
@@ -429,6 +431,7 @@ function setupGIF() {
 ## Video
 
 [Video demostratativo](URL)
+
 
 
 
