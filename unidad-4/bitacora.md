@@ -211,110 +211,199 @@ function setupGIF() {
 Código modificado:
 
 ``` js
-const STATES = {
-  WAIT_MICROBIT_CONNECTION: "WAIT_MICROBIT_CONNECTION",
-  RUNNING: "RUNNING",
-};
-let appState = STATES.WAIT_MICROBIT_CONNECTION;
+// P_2_3_7_01
+//
+// Generative Gestaltung – Creative Coding im Web
+// ISBN: 978-3-87439-902-9, First Edition, Hermann Schmidt, Mainz, 2018
+// Benedikt Groß, Hartmut Bohnacker, Julia Laub, Claudius Lazzeroni
+// with contributions by Joey Lee and Niels Poldervaart
+// Copyright 2018
+//
+// http://www.generative-gestaltung.de
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
-// Comunicación serial con micro:bit
+/**
+ * Simple drawing tool where mouse input gets mirrored over multiple axes
+ *
+ * MOUSE
+ * left click          : draw line
+ *
+ * KEYS
+ * 1                   : toggle vertical mirror
+ * 2                   : toggle horizontal mirror
+ * 3                   : toggle diagonal mirror 1
+ * 4                   : toggle diagonal mirror 2
+ * 5-9                 : change color
+ * 0                   : color white (eraser)
+ * arrow up            : increase line weight
+ * arrow down          : decrease line weight
+ * arrow right         : increase number of tiles
+ * arrow left          : decrease number of tiles
+ * d                   : show/hide mirror axes
+ * del, backspace      : clear screen
+ * g                   : start/stop gif recording
+ * s                   : save png
+ *
+ * CONTRIBUTED BY
+ * [Niels Poldervaart](http://NielsPoldervaart.nl)
+*/
+
+
+var gif;
+var canvasElement;
+var recording = false;
+
+var lineWidth = 3;
+var lineColor;
+
+var mv = true;
+var mh = true;
+var md1 = true;
+var md2 = true;
+var penCount = 1;
+
+var showAxes = true;
+
+var img;
+
+
 let port;
 let connectBtn;
 let connectionInitialized = false;
 let microBitConnected = false;
 
-// Datos gestuales desde micro:bit
+const STATES = {
+  WAIT_MICROBIT_CONNECTION: "WAITMICROBIT_CONNECTION",
+  RUNNING: "RUNNING",}
+
+let appState = STATES.WAIT_MICROBIT_CONNECTION;
 let microBitX = 0;
 let microBitY = 0;
 let microBitAState = false;
 let microBitBState = false;
+let prevmicroBitAState = false;
 let prevmicroBitBState = false;
 
-// Parámetros visuales
-let gif;
-let canvasElement;
-let recording = false;
-let lineWidth = 3;
-let lineColor;
-let mv = true;
-let mh = true;
-let md1 = true;
-let md2 = true;
-let penCount = 1;
-let showAxes = true;
-let img;
+
+
 
 function setup() {
+  // Please work with a square canvas
   canvasElement = createCanvas(800, 800);
   noCursor();
   noFill();
   lineColor = color(0);
 
+  // Create an offscreen graphics object to draw into
   img = createGraphics(width, height);
   img.pixelDensity(1);
-
-  setupGIF();
-
+  
   port = createSerial();
   connectBtn = createButton("Connect to micro:bit");
-  connectBtn.position(10, 10);
-  connectBtn.mousePressed(() => {
-    if (!port.opened()) {
-      port.open("MicroPython", 115200);
-      port.clear(); // ← Limpieza del buffer para evitar datos basura
-      connectionInitialized = false;
-    } else {
-      port.close();
-    }
-  });
+  connectBtn.position(0, 0);
+  connectBtn.mousePressed(connectBtnClick);
+
+ 
 }
 
+function connectBtnClick() {
+  if (!port.opened()) {
+    port.open("MicroPython", 115200);
+    connectionInitialized = false;
+  } else {
+    port.close();
+  }
+}
+
+function updateButtonStates(newAState, newBState) {
+ 
+  if (newAState === true && prevmicroBitAState === false) {
+    // create a new random color and line length
+    lineModuleSize = random(50, 160);
+    
+    clickPosX = microBitX;
+    clickPosY = microBitY;
+    print("A pressed");
+  }
+  prevmicroBitAState = newAState;
+  prevmicroBitBState = newBState;
+} 
+
+ 
+
+
+
+
 function draw() {
-  background(255);
+  //******************************************
+  
+   background(255);
   image(img, 0, 0);
+
   img.strokeWeight(lineWidth);
   img.stroke(lineColor);
 
-  // Conexión y lectura de datos
   if (!port.opened()) {
-    microBitConnected = false;
     connectBtn.html("Connect to micro:bit");
+    microBitConnected = false;
   } else {
     microBitConnected = true;
     connectBtn.html("Disconnect");
 
-    if (!connectionInitialized) {
+    if (port.opened() && !connectionInitialized) {
+      port.clear();
       connectionInitialized = true;
     }
 
     if (port.availableBytes() > 0) {
       let data = port.readUntil("\n");
-      let values = data.trim().split(",");
-      if (values.length === 4) {
-        microBitX = int(values[0]) + width / 2;
-        microBitY = int(values[1]) + height / 2;
-        microBitAState = values[2] === "true";
-        microBitBState = values[3] === "true";
-
-        // Evento: botón B soltado → cambia color
-        if (!microBitBState && prevmicroBitBState) {
-          lineColor = color(random(255), random(255), random(255));
+      if (data) {
+        data = data.trim();
+        let values = data.split(",");
+        if (values.length == 4) {
+          microBitX = int(values[0]) + windowWidth / 2;
+          microBitY = int(values[1]) + windowHeight / 2;
+          microBitAState = values[2].toLowerCase() === "true";
+          microBitBState = values[3].toLowerCase() === "true";
+          updateButtonStates(microBitAState, microBitBState);
+        } else {
+          print("No se están recibiendo 4 datos del micro:bit");
         }
-        prevmicroBitBState = microBitBState;
       }
     }
   }
-
-  // Máquina de estados
-  switch (appState) {
+   switch (appState) {
     case STATES.WAIT_MICROBIT_CONNECTION:
-      if (microBitConnected) {
-        appState = STATES.RUNNING;
+      // No puede comenzar a dibujar hasta que no se conecte el microbit
+      // evento 1:
+      if (microBitConnected === true) {
+        // Preparo todo para el estado en el próximo frame
         print("Microbit ready to draw");
-      }
-      break;
+         // Please work with a square canvas
+  canvasElement = createCanvas(800, 800);
+  noCursor();
+  noFill();
+  lineColor = color(0);
 
-    case STATES.RUNNING:
+  // Create an offscreen graphics object to draw into
+  img = createGraphics(width, height);
+  img.pixelDensity(1);
+
+  setupGIF();
+        appState = STATES.RUNNING;
+      }
+
+      break;
+      
+       case STATES.RUNNING:
       // EVENTO: estado de conexión del microbit
       if (microBitConnected === false) {
         print("Waiting microbit connection");
@@ -322,47 +411,56 @@ function draw() {
         appState = STATES.WAIT_MICROBIT_CONNECTION;
       }
 
-      // Dibujo activado por botón A
-      if (microBitAState) {
-        let w = width / penCount;
-        let h = height / penCount;
-        let x = microBitX % w;
-        let y = microBitY % h;
-        let px = x;
-        let py = y;
+      //EVENTO: recepción de datos seriales del micro:bit
 
-        for (let i = 0; i < penCount; i++) {
-          for (let j = 0; j < penCount; j++) {
-            let ox = i * w;
-            let oy = j * h;
+      if (microBitAState === true) {
+     
+    var w = width / penCount;
+    var h = height / penCount;
+    var x = microBitX % w;
+    var y = microBitY % h;
+    var px = x - (microBitX);
+    var py = y - (microBitY );
 
-            img.line(x + ox, y + oy, px + ox, py + oy);
-            if (mh || md2 && md1 && mv) img.line(w - x + ox, y + oy, w - px + ox, py + oy);
-            if (mv || md2 && md1 && mh) img.line(x + ox, h - y + oy, px + ox, h - py + oy);
-            if (mv && mh || md2 && md1) img.line(w - x + ox, h - y + oy, w - px + ox, h - py + oy);
-            if (md1 || md2 && mv && mh) img.line(y + ox, x + oy, py + ox, px + oy);
-            if (md1 && mh || md2 && mv) img.line(y + ox, w - x + oy, py + ox, w - px + oy);
-            if (md1 && mv || md2 && mh) img.line(h - y + ox, x + oy, h - py + ox, px + oy);
-            if (md1 && mv && mh || md2) img.line(h - y + ox, w - x + oy, h - py + ox, w - px + oy);
-          }
-        }
+    for (var i = 0; i < penCount; i++) {
+      for (var j = 0; j < penCount; j++) {
+        var ox = i * w;
+        var oy = j * h;
 
-        if (recording) {
-          gif.addFrame(canvasElement.canvas, { delay: 1, copy: true });
-        }
+        // Normal position
+        img.line(x + ox, y + oy, px + ox, py + oy);
+        // Horizontal mirror or all three other mirrors
+        if (mh || md2 && md1 && mv) img.line(w - x + ox, y + oy, w - px + ox, py + oy);
+        // Vertical mirror
+        if (mv || md2 && md1 && mh) img.line(x + ox, h - y + oy, px + ox, h - py + oy);
+        // Horizontal and vertical mirror
+        if (mv && mh || md2 && md1) img.line(w - x + ox, h - y + oy, w - px + ox, h - py + oy);
+
+        // When mirroring diagonally, flip X and Y inputs.
+        if (md1 || md2 && mv && mh) img.line(y + ox, x + oy, py + ox, px + oy);
+        if (md1 && mh || md2 && mv) img.line(y + ox, w - x + oy, py + ox, w - px + oy);
+        if (md1 && mv || md2 && mh) img.line(h - y + ox, x + oy, h - py + ox, px + oy);
+        if (md1 && mv && mh || md2) img.line(h - y + ox, w - x + oy, h - py + ox, w - px + oy);
       }
-      break;
-  }
+    }
+        
+         // draw pen
+    fill(lineColor);
+    noStroke();
+    ellipse(microBitX, microBitY, lineWidth + 2, lineWidth + 2);
+    stroke(0, 50);
+    noFill();
+    ellipse(microBitX, microBitY, lineWidth + 1, lineWidth + 1);
+    
+        if (showAxes) {
+    var w = width / penCount;
+    var h = height / penCount;
 
-  // Visualización de ejes y cursor
-  if (showAxes) {
-    let w = width / penCount;
-    let h = height / penCount;
-
-    for (let i = 0; i < penCount; i++) {
-      for (let j = 0; j < penCount; j++) {
-        let x = i * w;
-        let y = j * h;
+    // draw mirror axes and tiles
+    for (var i = 0; i < penCount; i++) {
+      for (var j = 0; j < penCount; j++) {
+        var x = i * w;
+        var y = j * h;
 
         stroke(0, 50);
         strokeWeight(1);
@@ -376,18 +474,20 @@ function draw() {
         rect(i * w, j * h, w - 1, h - 1);
       }
     }
-
-    fill(lineColor);
-    noStroke();
-    ellipse(microBitX, microBitY, lineWidth + 2, lineWidth + 2);
-    stroke(0, 50);
-    noFill();
-    ellipse(microBitX, microBitY, lineWidth + 1, lineWidth + 1);
-  }
+        
+        }
+      }
+ }
 }
 
+
+  //*******************************************
+
+
+     
+
 function keyPressed() {
-  if (key == 's' || key == 'S') saveCanvas("drawing_" + year() + nf(month(), 2) + nf(day(), 2) + "_" + nf(hour(), 2) + nf(minute(), 2) + nf(second(), 2), 'png');
+  if (key == 's' || key == 'S') saveCanvas(gd.timestamp(), 'png');
   if (keyCode == DELETE || keyCode == BACKSPACE) img.clear();
 
   if (keyCode == RIGHT_ARROW) penCount++;
@@ -425,12 +525,19 @@ function setupGIF() {
     debug: true,
     workerScript: '../../libraries/gif.js/gif.worker.js'
   });
-}
+  gif.on('finished', function(blob) {
+    saveAs(blob, gd.timestamp() + '.gif');
+    setupGIF();
+  });
+
+ }
+
 ```
 
 ## Video
 
 [Video demostratativo](URL)
+
 
 
 
