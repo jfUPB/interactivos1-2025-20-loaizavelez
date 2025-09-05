@@ -206,11 +206,10 @@ function setupGIF() {
 
 ```
 
-[Enlace a la aplicación modificada](URL)
 
-Código modificado:
+[Enlace a la aplicación a modificar](https://editor.p5js.org/loaizavelez/sketches/_yj7rZ8-_)
 
-``` js
+```js
 // P_2_3_7_01
 //
 // Generative Gestaltung – Creative Coding im Web
@@ -280,6 +279,11 @@ let connectBtn;
 let connectionInitialized = false;
 let microBitConnected = false;
 
+//guardar frame anterior
+let prevMicroBitX = 0;
+let prevMicroBitY = 0;
+
+
 const STATES = {
   WAIT_MICROBIT_CONNECTION: "WAITMICROBIT_CONNECTION",
   RUNNING: "RUNNING",}
@@ -333,6 +337,15 @@ function updateButtonStates(newAState, newBState) {
     clickPosY = microBitY;
     print("A pressed");
   }
+
+
+  if (newBState === true && prevmicroBitBState === false) {
+    
+    lineColor =  color(random(255), random(255), random(255), random(80, 100));
+    print("B released");
+   
+     
+  }
   prevmicroBitAState = newAState;
   prevmicroBitBState = newBState;
 } 
@@ -369,6 +382,12 @@ function draw() {
         data = data.trim();
         let values = data.split(",");
         if (values.length == 4) {
+          
+          //Guardar posición anterior
+          prevMicroBitX = microBitX;
+          prevMicroBitY = microBitY;
+      //-----------------------------
+
           microBitX = int(values[0]) + windowWidth / 2;
           microBitY = int(values[1]) + windowHeight / 2;
           microBitAState = values[2].toLowerCase() === "true";
@@ -419,8 +438,8 @@ function draw() {
     var h = height / penCount;
     var x = microBitX % w;
     var y = microBitY % h;
-    var px = x - (microBitX);
-    var py = y - (microBitY );
+    var px = x - (microBitX - prevMicroBitX );
+    var py = y - (microBitY - prevMicroBitY );
 
     for (var i = 0; i < penCount; i++) {
       for (var j = 0; j < penCount; j++) {
@@ -532,11 +551,12 @@ function setupGIF() {
 
  }
 
+
 ```
 
-## Video
 
-[Video demostratativo](URL)
+
+[Video demostratativo](https://youtu.be/BbZjzv5ij_E)
 
 
 
