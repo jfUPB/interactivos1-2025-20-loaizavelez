@@ -1,7 +1,7 @@
 
 # Evidencias de la unidad 5
 
-### Actividad 
+### Actividad 2
 
 **Como se diferencia el envio de datos:**
 
@@ -43,9 +43,72 @@ El programa no es capaz de interpretar los caracteres.
 **Caracteres de quiebre o "Enter":** Se puede observar un patrón en el comportamiento de los datos, en ASCCI
 
 
+
+
+### Actividad 3
+
+
+¿Qué cambios tienen los programas?
+
+R//
+
+**Codigo original del microbit para datos binarios**
+```py
+# Imports go at the top
+from microbit import *
+import struct
+uart.init(115200)
+display.set_pixel(0,0,9)
+
+while True:
+    if accelerometer.was_gesture('shake'):
+        xValue = accelerometer.get_x()
+        yValue = accelerometer.get_y()
+        aState = button_a.is_pressed()
+        bState = button_b.is_pressed()
+        data = struct.pack('>2h2B', xValue, yValue, int(aState), int(bState))
+        uart.write(data)
+```
+
+
+```py
+from microbit import *
+import struct
+
+uart.init(115200)
+display.set_pixel(0, 0, 9)
+
+while True:
+    xValue = accelerometer.get_x()
+    yValue = accelerometer.get_y()
+    aState = button_a.is_pressed()
+    bState = button_b.is_pressed()
+    # Empaqueta los datos: 2 enteros (16 bits) y 2 bytes para estados
+    data = struct.pack('>2h2B', xValue, yValue, int(aState), int(bState))
+    # Calcula un checksum simple: suma de los bytes de data módulo 256
+    checksum = sum(data) % 256
+    # Crea el paquete con header, datos y checksum
+    packet = b'\xAA' + data + bytes([checksum])
+    uart.write(packet)
+    sleep(100)  # Envía datos a 10 Hz
+```
+
+
+
+
+
  
 
+**Dudas:**
 
+¿porque dibuja en ocasiones?
+<img width="1902" height="1026" alt="image" src="https://github.com/user-attachments/assets/37af0026-e3c4-4850-8e6d-0624de6be5a7" />
+
+
+<img width="836" height="185" alt="image" src="https://github.com/user-attachments/assets/6d970a62-a6dd-405e-bec0-b783599096f3" /> 
+
+parece que hay posibilidad de que los datos empaquetados no lleguen correctamente . lo que hace que no dibuje en ocasiones
 
  
+
 
