@@ -114,25 +114,24 @@ Se puede ver que no detecta los botones ni ninguno de los gestos con el acelerom
 <img width="860" height="161" alt="image" src="https://github.com/user-attachments/assets/ef074983-87ce-4011-b84a-ac7118c0dfde" />
 
 
+
 - **¿Qué es el error, TypeError: Supported types are: String, Integer number (0 to 255), Array of integer numbers (0 to 255), Uint8Array
     at undefined:507:9?**
 
 
+1.) Números enteros entre 0 y 255
 
+2.) Un arreglo de números entre 0 y 255
 
+3.) Uint8Array at undefined:507:9, es un arreglo que guarda valores sin signos de 8 bits.
 
-  
-
-
-
-
-
-
-
-
+<img width="803" height="71" alt="image" src="https://github.com/user-attachments/assets/aa2dc339-dff1-4050-a26e-befd6417bbb6" />
 
 
 Capturas de pantalla de los algunos dibujos que hayas hecho con el sketch.
+
+<img width="796" height="733" alt="image" src="https://github.com/user-attachments/assets/57a3f77c-09d8-4e44-851b-7bfdd772b986" />
+
 
 
 
@@ -142,7 +141,9 @@ Capturas de pantalla de los algunos dibujos que hayas hecho con el sketch.
 
 ### Actividad 2
 
-**Como se diferencia el envio de datos:**
+**¿Qué diferencias ves entre los datos en ASCII y en binario?**
+
+R//
 
 ```py
 # Imports go at the top
@@ -173,13 +174,143 @@ Los siguientes datos muestran datos en ASCCI de las coordenadas en el eje coorde
 
 Los siguientes datos muestran datos en formato binario de las coordenadas en el eje coordenado (x,y) del aceleromtro, el booleano muestra si los botones (a,b) son presionados (True).
 
-**Traducción a texto:**D0l ��8��00��8$��4��@��@��<L��<(0���D��8���� ��,����@L�<,���8��8��@��<��8��8��4��0��4��4��8��4�
 
-El programa no es capaz de interpretar los caracteres. 
+```py
+# Imports go at the top
+from microbit import *
+import struct
+uart.init(115200)
+display.set_pixel(0,0,9)
 
-**Traducción a HEX:** fe 58 00 9c 00 00 fe 54 00 9c 00 00 fe
+while True:
+    if accelerometer.was_gesture('shake'):
+        xValue = accelerometer.get_x()
+        yValue = accelerometer.get_y()
+        aState = button_a.is_pressed()
+        bState = button_b.is_pressed()
+        data = struct.pack('>2h2B', xValue, yValue, int(aState), int(bState))
+        uart.write(data)
 
-**Caracteres de quiebre o "Enter":** Se puede observar un patrón en el comportamiento de los datos, en ASCCI
+```
+
+<img width="1291" height="100" alt="image" src="https://github.com/user-attachments/assets/ccf40c4a-c686-48bb-ab11-671195553ee6" />
+
+
+<img width="1009" height="171" alt="image" src="https://github.com/user-attachments/assets/9e794664-a994-4700-8584-46a5df4bd78d" />
+
+
+
+
+**Traducción a texto:**�������|p��`��x84�x��4,����P�������4
+
+El programa no es capaz de interpretar los caracteres, el serialTerminal al intentar convertirlo a texto, usa caracteres que no logra interpretar, el binario es distinto del ASCII, por eso saca los simbolos ininteliigibles. 
+
+**Traducción a HEX:** 04 0c ff ac 00 00 02 d0 ff a8 00 00 02 f8 fc 7c 00 00 00 70 ff 1c 00 00 ff 60 fc f0 00 00 04 78 02 38 00 00 02 34 fc 78 00 00 01 a8 fd 34 00 00 00 2c fe b4 00 00 03 94 ff 50 00 00 fd e8 ff e8 00 00 fc bc fd 34 00 00
+
+**Caracteres de quiebre o "Enter":** No hay caracter de quiebre en binario, en su lugar se envia en paquetes.
+
+**¿Cómo se traduce el texto a binario?**
+
+La clave está en "'>2h2B'" este se encarga de organizar el paquete de datos "struct.pack" tomando los valores más significativos primero, pero, ¿Qué es un valor más significativo? se refiere a los valores que representan estados, un true o false, valores de medición, en este caso, las coordenadas en el eje coordenado (X,Y). El formato de empaquetado se denomina Big-endian. El resto de la etsructura comformada por 2h y 2B. 2h son los valores enteros con signo, y 2B son los valores enteros sin signo. El total de datos empaquetados es de 6 bytes.
+
+Un paquete de datos binarios sin organizar se ve así, 04 0c ff ac 00 00 02 d0 ff a8 00 00, organizado se vería así, acff0c04 d0020000 a8ff0000. 
+
+En el hipotetico caso de que el comparador sea mayor que "'<2h2B'" se vería así, 04 0c ff ac 00 00 02 d0 ff a8 00 00, fijese que es igual a como se envian los datos por el puerto de comunicaciones. 
+
+
+
+**Usos comunes de Big Endian**
+
+El orden de bytes de la red se utiliza habitualmente en protocolos de red, como el Protocolo de Control de Transmisión (TCP) y el Protocolo de Internet (IP). Esta estandarización del orden de la red garantiza que los datos transmitidos por Internet se interpreten correctamente, independientemente del orden de bytes de los sistemas host involucrados. Además, el orden de bytes de la red es frecuente en muchas arquitecturas RISC (Reduced Instruction Set Computing), como las que se utilizan en los mainframes IBM más antiguos y algunos sistemas basados ​​en UNIX. Este orden de bytes también se encuentra en aplicaciones de procesamiento de señales digitales (DSP), donde la alineación con formatos legibles por humanos es ventajosa para depurar y analizar las salidas de datos. Además, el orden de bytes de la red se utiliza a menudo en formatos de archivos multimedia, como ciertos estándares de imagen y audio, donde la interpretación coherente de los datos es crucial. Comprender los usos comunes del orden de bytes de la red es vital para los desarrolladores que trabajan en campos donde el intercambio de datos entre sistemas heterogéneos se produce con frecuencia.
+
+
+**Aplicaciones de Little Endian**
+
+El little endian se utiliza ampliamente en la arquitectura de la mayoría de los ordenadores personales y servidores, en particular los que funcionan con procesadores Intel y AMD. Esta adopción generalizada se debe en gran medida a la facilidad que proporciona en las operaciones aritméticas, ya que los procesadores pueden acceder directamente al byte menos significativo para los cálculos, lo que agiliza los procesos y reduce la sobrecarga computacional. El little endian también es frecuente en los formatos de archivo y protocolos que se originan a partir de estas arquitecturas, como los que se utilizan en los sistemas operativos Windows y numerosas estructuras de datos binarios. Además, el little endian se suele emplear en sistemas y dispositivos integrados que priorizan la velocidad y la eficiencia de procesamiento sobre los formatos legibles por humanos. En el ámbito del desarrollo de software, comprender el little endian es crucial cuando se trabaja con lenguajes de programación de bajo nivel, como escribir código ensamblador o desarrollar firmware, donde es necesaria la manipulación directa del orden de bytes. Estas aplicaciones demuestran la practicidad y la eficiencia del little endian en los entornos informáticos modernos.
+
+[El debate entre Big Endian y Little Endian – Wray Castle](https://wraycastle.com/es/blogs/knowledge-base/big-endian-vs-little-endian)
+
+
+
+En este caso se modifica el codigo para enviar datos en ASCII y en binario 
+
+```py
+# Imports go at the top
+from microbit import *
+import struct
+uart.init(115200)
+display.set_pixel(0,0,9)
+
+while True:
+    if accelerometer.was_gesture('shake'):
+        xValue = accelerometer.get_x()
+        yValue = accelerometer.get_y()
+        aState = button_a.is_pressed()
+        bState = button_b.is_pressed()
+        data = struct.pack('>2h2B', xValue, yValue, int(aState), int(bState))
+        uart.write(data)
+        uart.write("ASCII:\n")
+        data = "{},{},{},{}\n".format(xValue, yValue, aState,bState)
+        uart.write(data)
+
+```
+
+Asi se ven los datos combinados: 
+
+```
+���lASCII:
+-544,-660,False,True
+�DASCII:
+2040,580,True,False
+```
+
+
+- **¿Qué pasaría si se retira el 2b y solo se deja el 2h y viceversa?**
+
+R// 
+
+- En caso de retirar el 2b se tomarán 4 bytes, en este caso, 04 a0 07 f8, el valor cambia completamente, en lugar de mostrar un eje coordenado, muestra un númeri entero 77361176.
+
+- En caso de reitrar el 2h solo se enviarian 2 bytes y no se leerían los otros 4 bytes, además solo se toman los valores enteros sin signo, es decir, solo los positivos, envía estos datos, 64 78.
+
+
+
+<img width="1205/2" height="247/2" alt="image" src="https://github.com/user-attachments/assets/a77cc807-1f84-4080-958b-652464a90109" />
+
+
+
+**¿Qué ventajas y desventajas ves en usar un formato binario en lugar de texto en ASCII?**
+
+R// Las ventajas de usar binario en lugar de ASCII son:
+
+- mayor facilidad de envio de datos, al estar empaquetados y ser más cortos se procesan más rapido.
+- Lectura rapida por medio del microbit.
+- Mayor compatibilidad.
+
+
+Desventajas.
+
+- Sin herramientas no puede ser legible.
+- Probabilidad de que bytes no se envien.
+- Su lectura es complejaen HEX.
+
+**¿Qué ventajas y desventajas ves en usar un formato ASCII en lugar de binario?**
+
+R//
+
+Ventajas:
+
+- Alta legibilidad.
+- Alta comptabilidad con programás con lectura de texto.
+- Se pueden detectar los errores más facilmente.
+
+
+Desventajas:
+
+- El envio de datos es muy lento.
+- Requiere más uso de CPU para convertirlo a texto.
+- El espacio que ocupan los bytes son mayores.
+
 
 
 
@@ -635,6 +766,7 @@ function setupGIF() {
 ```
 
  
+
 
 
 
