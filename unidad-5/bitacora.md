@@ -1,6 +1,145 @@
 
 # Evidencias de la unidad 5
 
+
+### Actividad 1
+
+**Describe cómo se están comunicando el micro:bit y el sketch de p5.js. ¿Qué datos envía el micro:bit?**
+
+R// El programa de p5js se comunica por un puerto serial uart, a 115200 baudios, con un tiempo de espera de 100 milisegundos, este está conectado a un microbit por un puerto **COM**. Los datos enviados están en codigo ASCII, es decir, envia caracteres con valores númericos, pueden ser números o estados booleanos.
+
+En este ejercicio, el micro:bit envia los datos por medio de los siguientes sensores:
+
+- Acelerometro, captura la posición en el eje coordenado (x,y).
+- Botón A, iniclaizado en False
+- Botón B, inicializado en False
+
+
+
+¿Cómo es la estructura del protocolo ASCII usado?
+
+En el codigo de micropython, la estructura es la siguiente:
+
+```py
+data = "{},{},{},{}\n".format(xValue, yValue, aState,bState)
+```
+
+en texto se lee así:
+
+12,88,True,False
+
+80,8,False,True
+
+384,80,False,True
+
+448,-48,False,False
+
+340,-108,True,False
+
+----------------------------------------------------------
+Y en Hex así:
+
+38 32 38 2c 32 34 2c 46 61 6c 73 65 2c 46 61 6c 73 65 0a
+
+38 31 36 2c 32 34 2c 46 61 6c 73 65 2c 46 61 6c 73 65 0a 
+
+Cabe resaltar que el caracter **/n** no es en si un valor o un estado, es el break o el enter, se usa para separar los datos y que no se junten y den un resultado errado.
+
+
+
+
+Muestra y explica la parte del código de p5.js donde lee los datos del micro:bit y los transforma en coordenadas de la pantalla y ¿Cómo se generan los eventos A pressed y B released que se generan en p5.js a partir de los datos que envía el micro:bit?.
+
+```js
+ if (port.availableBytes() > 0) {
+      let data = port.readUntil("\n");
+      if (data) {
+        data = data.trim();
+        let values = data.split(",");
+        if (values.length == 4) {
+          microBitX = int(values[0]) + windowWidth / 2;
+          microBitY = int(values[1]) + windowHeight / 2;
+          microBitAState = values[2].toLowerCase() === "true";
+          microBitBState = values[3].toLowerCase() === "true";
+          updateButtonStates(microBitAState, microBitBState);
+        } else {
+          print("No se están recibiendo 4 datos del micro:bit");
+        }
+      }
+    }
+  
+
+```
+- **let data = port.readUntil("\n");** Como se menciono anteriormente, el break es el que permite terminar de leer la línea y que no se mezclen los datos de otros valores.
+
+- **microBitX = int(values[0]) + windowWidth / 2; ... microBitY = int(values[1]) + windowHeight / 2;** Estos dos se encargan de recopilar la inforamción del aceletrometro, convienrten el valor en un número enetero y lo ubican al centro de la pantalla.
+
+-   **microBitAState = values[2].toLowerCase() === "true";...microBitBState = values[3].toLowerCase() === "true";...updateButtonStates(microBitAState, microBitBState);** Convierte los valores de "A" y "B" en un booleano y actualiza las transiciones de estados con el updateState.
+
+Visualmente se vería así: **12,88,True,False**
+
+
+### Hipotesis. 
+
+- **¿Que pasaría si se quita el "/n" del micropython?**
+
+R// Despues de verificar en el serialTerminal, el resultado es el esperado, directamente, el programa deja de leer correctamnete los valores, cortando palabras y combinandolas, haciendo que sea ininteligible.
+
+- 72,528,False,False60,492,FalseFalse12,512,False,alse168
+
+<img width="1178" height="122" alt="image" src="https://github.com/user-attachments/assets/1a97fd91-a7bd-41b7-996b-844b6069e45c" />
+
+<img width="1171" height="114" alt="image" src="https://github.com/user-attachments/assets/883eb2f1-61f9-44a8-a333-ae92d03979cb" />
+
+Vease que no hay caractér 0a en la imagen.
+
+- **¿Qué pasaria si se ejecuta en el js sin el break en python?**
+
+```py
+data = "{},{},{},{}".format(xValue, yValue, aState,bState)
+ ```
+
+```js
+let data = port.readUntil("\n");
+
+```
+
+Se puede ver que no detecta los botones ni ninguno de los gestos con el acelerometro. ¿Porqué?, la clave está en **let data = port.readUntil("\n");** al no llegar a un final, significa que el mensaje aún no termina, por lo tanto queda en un tiempo de espera mientras este se acumula, por lo tanto no se genera ningún dibujo. Esto aplica también si se elimina del el **js**, ejemplo, **let data = port.readUntil();** isgue buscando el delimitador y al o encontarlo vyelve a pasar lo mismo
+
+<img width="1919" height="972" alt="image" src="https://github.com/user-attachments/assets/fe93696a-d490-4150-bfb6-3d8f0a24d71f" />
+
+
+
+
+<img width="860" height="161" alt="image" src="https://github.com/user-attachments/assets/ef074983-87ce-4011-b84a-ac7118c0dfde" />
+
+
+- **¿Qué es el error, TypeError: Supported types are: String, Integer number (0 to 255), Array of integer numbers (0 to 255), Uint8Array
+    at undefined:507:9?**
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+Capturas de pantalla de los algunos dibujos que hayas hecho con el sketch.
+
+
+
+
+
+
+
 ### Actividad 2
 
 **Como se diferencia el envio de datos:**
@@ -496,6 +635,7 @@ function setupGIF() {
 ```
 
  
+
 
 
 
