@@ -318,6 +318,57 @@ Desventajas:
 ### Actividad 3
 
 
+**Explica por qué en la unidad anterior teníamos que enviar la información delimitada y además marcada con un salto de línea y ahora no es necesario.**
+
+R// En la unidad anterior todo se enviaba en ASCII, para que los datos enviados fueran interpretados y traducidos a texto para entender que dice, se debía poner un break en este caso, "\n", este se encargaba de delimitar el final del paquete. De esta forma se evitaba que la lectura de datos se viera errada como se vio previamnete. Ahora el archivo binario está delimitado a 6 bytes. Lo siginifica que ya no se debe delimitar el tamaño del paquete, esto no significa que los datos enviados siempre sean los deseados, suele suceder que algunos datos quedan en medio y se envian. 
+
+
+
+**¿Qué ves en la consola? ¿Por qué crees que se produce este error?**
+
+```
+
+
+microBitX: 500 microBitY: 524 microBitAState: true microBitBState: false 
+ 
+Microbit ready to draw 
+
+microBitX: 500 microBitY: 524 microBitAState: true microBitBState: false 
+ 
+
+microBitX: 524 microBitY: 256 microBitAState: true microBitBState: false 
+
+```
+
+
+``` 
+
+microBitX: 500 microBitY: 524 microBitAState: true microBitBState: false 
+ 
+Microbit ready to draw 
+
+microBitX: 500 microBitY: 524 microBitAState: true microBitBState: false 
+ 
+Disconnected from serial port 
+microBitX: 500 microBitY: 524 microBitAState: true microBitBState: false 
+```
+
+Lo primero que note es que el error no se produce siempre, lo ejecute un total de 5 veces y solo en la primera ocasión fue cuando salio el error, por lo que puedo decir que el error ocurre en casos muy concretos, intenté reproducirlo pero no volvió aparecer. 
+
+En este caso se modificó el micropython para dar unos valores en concreto.
+
+
+```py
+
+Value = 500
+    yValue = 524
+    aState = True
+    bState = False
+
+```
+
+Solo en una ocasión se logro ver el error y es está parte, **microBitX: 524 microBitY: 256 microBitAState: true microBitBState: false**, los valores no coinciden. Una de las complicaciones de enviar paquetes binarios, es que en estos paquetes pueden ir valores errados que quedaron en el camino, es probable que uno de estos valores quedara atrapado y fue enviado por error. 
+
 ¿Qué cambios tienen los programas?
 
 R//
@@ -362,6 +413,38 @@ while True:
     uart.write(packet)
     sleep(100)  # Envía datos a 10 Hz
 ```
+
+
+**¿Qué ves?**
+
+Los datos enviados siempre son los mismos. 
+
+```
+microBitX: 500 microBitY: 524 microBitAState: true microBitBState: false 
+```
+
+
+ ¿Qué cambios tienen los programas y ¿Qué puedes observar en la consola del editor de p5.js?
+
+
+```
+
+A pressed 
+B released 
+
+A pressed 
+B released 
+
+A pressed 
+B released 
+A pressed 
+```
+
+Con el cambio en el codigo del micrpython ahora se muestran los estados de los botones, si se presionan o si se sueltan, ya dibuja de manera normal, anteriormente solo dibujaba un ciruclo en una zona aleatoria de la pantalla.
+
+**¿Qué es un checksum?**
+
+R// El checksum es una sumatoria suma una cantidad de datos en un rango de 1 a 7 y si el resultado es igual a 256 permite enviar ese paquete de datos, en caso de que el checksum arroje un error se descarta el paquete y se da paso al siguiente, asi se verifica y se evitan los errores vistos anteriormente
 
 
 
@@ -766,6 +849,7 @@ function setupGIF() {
 ```
 
  
+
 
 
 
