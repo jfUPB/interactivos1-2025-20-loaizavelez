@@ -279,6 +279,11 @@ R//
 
 
 
+**Qué es el struct.pack**
+
+R// el struck.pack se encraga de caonvertir los valores enteros y booleanos en un paquete de 6 bytes binarios, enviados en el siguiente formato data = struct.pack('>2h2B', xValue, yValue, int(aState), int(bState)), se envian en big-endian, es decir que se envian primero los datos de mayor valor.
+
+
 **¿Qué ventajas y desventajas ves en usar un formato binario en lugar de texto en ASCII?**
 
 R// Las ventajas de usar binario en lugar de ASCII son:
@@ -467,6 +472,17 @@ End Delimiter (ED) - We can introduce an ED(pattern) to indicate the end of the 
 1. Character/Byte Stuffing: Used when frames consist of characters. If data contains ED then, a byte is stuffed into data to differentiate it from ED. 
 
 [Tipos de framing](https://www.geeksforgeeks.org/computer-networks/framing-in-data-link-layer/)
+
+
+
+**¿Qué es un header?**
+
+R// Un header es una secuencia inicial del paquete que no contiene información vital, funciona más como un inicalizador que permite enviar los datos de comunicación serial. Inicializado en **0xAA**
+
+
+**¿Qué es el dataview?**
+
+R// El dataview es un formato de javascript que permite leer los paquetes binarios, permitiendo interpretar los datos binarios de los booleanos y de los números enteros como es nuetsro caso de estudio.
 
   
 
@@ -872,10 +888,132 @@ function setupGIF() {
 
 ```
 
- 
+
+**Qué se agrego?**
+
+- Primero se reemplazo la lectura ASCII:
+
+
+```js
+
+ if (data) {
+        data = data.trim();
+        let values = data.split(",");
+        if (values.length == 4) {
+          
+          //Guardar posición anterior
+          prevMicroBitX = microBitX;
+          prevMicroBitY = microBitY;
+      //-----------------------------
+
+          microBitX = int(values[0]) + windowWidth / 2;
+          microBitY = int(values[1]) + windowHeight / 2;
+          microBitAState = values[2].toLowerCase() === "true";
+          microBitBState = values[3].toLowerCase() === "true";
+          updateButtonStates(microBitAState, microBitBState);
+        } else {
+          print("No se están recibiendo 4 datos del micro:bit");
+
+```
+
+y fue reemplazado por la lectura de datos binarios agregandose el checksum:
 
 
 
+```js
+
+   let newData = port.readBytes(available);
+    serialBuffer = serialBuffer.concat(newData);
+  }
+
+  // Procesa el buffer mientras tenga al menos 8 bytes (tamaño de un paquete)
+  while (serialBuffer.length >= 8) {
+    // Busca el header (0xAA)
+    if (serialBuffer[0] !== 0xaa) {
+      serialBuffer.shift(); // Descarta bytes hasta encontrar el header
+      continue;
+    }
+
+    // Si hay menos de 8 bytes, espera a que llegue el paquete completo
+    if (serialBuffer.length < 8) break;
+
+    // Extrae los 8 bytes del paquete
+    let packet = serialBuffer.slice(0, 8);
+    serialBuffer.splice(0, 8); // Elimina el paquete procesado del buffer
+
+    // Separa datos y checksum
+    let dataBytes = packet.slice(1, 7);
+    let receivedChecksum = packet[7];
+    // Calcula el checksum sumando los datos y aplicando módulo 256
+    let computedChecksum = dataBytes.reduce((acc, val) => acc + val, 0) % 256;
+
+    if (computedChecksum !== receivedChecksum) {
+      console.log("Checksum error in packet");
+      continue; // Descarta el paquete si el checksum no es válido
+    }
+
+    // Si el paquete es válido, extrae los valores
+    let buffer = new Uint8Array(dataBytes).buffer;
+    let view = new DataView(buffer);
+    microBitX = view.getInt16(0);
+    microBitY = view.getInt16(2);
+    microBitAState = view.getUint8(4) === 1;
+    microBitBState = view.getUint8(5) === 1;
+    updateButtonStates(microBitAState, microBitBState);
+
+    console.log(
+      `microBitX: ${microBitX} microBitY: ${microBitY} microBitAState: ${microBitAState} microBitBState: ${microBitBState}`
+
+```
+
+Las partes del codigo fueron tomadas del ejemplo del profe, cabe aclarar que durante el desarrollo solo hubo un error con un corchete "}" de cierre causando que el programa no compilara, despúes de corregido el error el programa continuo funcionando como debería
+
+
+- **¿Qué hace la linea   console.log(`microBitX: ${microBitX} microBitY: ${microBitY} microBitAState: ${microBitAState} microBitBState: ${microBitBState}`?**
+
+  R// es el encargado de mostrar los envios de paquetes binarios y su correcta interpretación.
+
+  ```
+   microBitX: 548 microBitY: -148 microBitAState: true microBitBState: false 
+   microBitX: 524 microBitY: -196 microBitAState: false microBitBState: false 
+   B released 
+   microBitX: 460 microBitY: -100 microBitAState: false microBitBState: true 
+   microBitX: 476 microBitY: -44 microBitAState: false microBitBState: true 
+
+  ```
+
+- **¿Qué tipo de framing estamos usando?**
+
+  R// En esta actividad estamos usando Lenght-Field para indicar el tamaño del paquete, mencionado anteriormente es probable que algunos datos lleguen corruptos.
+
+  
+Anexos:
+
+<img width="1919" height="946" alt="image" src="https://github.com/user-attachments/assets/1515548f-d494-4a82-962c-d4bf36bced3f" />
+
+En la actividad se usaron todos lo estados agregados, es decir, el estado del botón "a" que permite dibujar y el estado de levantar el botón "b" para cambiar el color del trazo, ademas de usar el aceleroemtro para que cada trazo se viera en el canvas.
+
+
+
+
+### Rubrica
+
+
+Despúes de la investigación y los datos aportados de cada unidad se pasra a justificar la nota de la rubrica de cada actividad en un acumulado final.
+
+
+
+- Criterio 1 (logrado), profunidad de la indagación: en esta unidad se investigo y se forzaron erroes para indgar en el funcionamiento del envio de datos binarios y su forma de empaquetarse, con los errores se logro entender directamente el funcionamiento completo o parcial del codigo de python o del p5js. También se compararon los valores enviados por ASCII y binario y se vio como reaccionaban los programas al quitar y modificar caracteristicas de cada uno, del ASCII quitando el break y el binario modificando el envio de datos. Nota final: 4.4
+
+
+- Criterio 2 (Excelente), calidad de la experimentación: cada experimiento tenia un proposito y era entender el funcionamiento del codigo ASCII y binario, el como se reciben y se envian los datos y ver como los interpreta el serial terminal o el msimo javasricpt, forzando errores para ver como reaccionaban. Nota final: 5.0
+
+- Criterio 3 (logrado), analisis y relflexión: despúes de la investigación puedo decir que logre identificar las debilidades del framing y el como el chekcsum y el header garantizan el envio correcto de los datos, esto se profundizo más en la **actividad 3**. Nota final: 4.4
+
+ - Criterio 4 (logrado), Apropiación y articulación de conceptos: En la bitacoro está explicado el funcionamiento del header, cheksum y el dataview y el como permite identificar y garantizar el envio de datos ademas de explicar su funcionamiento se id ago más a profundidad en la actividad 2 y 3. Nota Final: 4.4
+
+
+**Nota final: 4.5**
 
 
 
