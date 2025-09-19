@@ -444,7 +444,31 @@ Con el cambio en el codigo del micrpython ahora se muestran los estados de los b
 
 **¿Qué es un checksum?**
 
-R// El checksum es una sumatoria suma una cantidad de datos en un rango de 1 a 7 y si el resultado es igual a 256 permite enviar ese paquete de datos, en caso de que el checksum arroje un error se descarta el paquete y se da paso al siguiente, asi se verifica y se evitan los errores vistos anteriormente
+R// El checksum es una sumatoria suma una cantidad de datos en un rango de 1 a 7 y si el resultado es igual a 256 permite enviar ese paquete de datos, en caso de que el checksum arroje un error se descarta el paquete y se da paso al siguiente, asi se verifica y se evitan los errores vistos anteriormente. 
+
+```py
+packet = b'\xAA' + data + bytes([checksum])
+
+```
+
+**Estrategios de framing**: hay varios metodos para el framing estrategias de stuffing, estrategias con campos de longitud, violación de código y 
+de longitud fija. El articulo está en ingles y la traducción deja mucho que desear.
+
+
+1. Fixed-size: The frame is of fixed size and there is no need to provide boundaries to the frame, the length of the frame itself acts as a delimiter.  
+
+Drawback: It suffers from internal fragmentation if the data size is less than the frame size
+Solution: Padding
+2. Variable size: In this, there is a need to define the end of the frame as well as the beginning of the next frame to distinguish. This can be done in two ways: 
+
+Length field - We can introduce a length field in the frame to indicate the length of the frame. Used in Ethernet(802.3). The problem with this is that sometimes the length field might get corrupted.
+End Delimiter (ED) - We can introduce an ED(pattern) to indicate the end of the frame. Used in Token Ring. The problem with this is that ED can occur in the data. 
+
+1. Character/Byte Stuffing: Used when frames consist of characters. If data contains ED then, a byte is stuffed into data to differentiate it from ED. 
+
+[Tipos de framing](https://www.geeksforgeeks.org/computer-networks/framing-in-data-link-layer/)
+
+  
 
 
 
@@ -849,6 +873,7 @@ function setupGIF() {
 ```
 
  
+
 
 
 
