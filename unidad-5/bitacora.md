@@ -996,7 +996,7 @@ En la actividad se usaron todos lo estados agregados, es decir, el estado del bo
 
 
 
-### Rubrica
+### Rúbrica
 
 
 Despúes de la investigación y los datos aportados de cada unidad se pasra a justificar la nota de la rubrica de cada actividad en un acumulado final.
@@ -1014,6 +1014,7 @@ Despúes de la investigación y los datos aportados de cada unidad se pasra a ju
 
 
 **Nota final: 4.5**
+
 
 
 
