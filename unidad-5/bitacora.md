@@ -15,7 +15,7 @@ En este ejercicio, el micro:bit envia los datos por medio de los siguientes sens
 - Botón B, inicializado en False
 
 
-
+<a name="pre1"></a>
 ¿Cómo es la estructura del protocolo ASCII usado?
 
 En el codigo de micropython, la estructura es la siguiente:
@@ -1003,7 +1003,7 @@ Despúes de la investigación y los datos aportados de cada unidad se pasra a ju
 
 
 
-- Criterio 1 (logrado), profunidad de la indagación: en esta unidad se investigo y se forzaron erroes para indgar en el funcionamiento del envio de datos binarios y su forma de empaquetarse, con los errores se logro entender directamente el funcionamiento completo o parcial del codigo de python o del p5js. También se compararon los valores enviados por ASCII y binario y se vio como reaccionaban los programas al quitar y modificar caracteristicas de cada uno, del ASCII quitando el break y el binario modificando el envio de datos. Nota final: 4.4
+- Criterio 1 (logrado), profunidad de la indagación: en esta unidad se investigo y se forzaron erroes para indgar en el funcionamiento del envio de datos binarios y su forma de empaquetarse, con los errores se logro entender directamente el funcionamiento completo o parcial del codigo de python o del p5js. También se compararon los valores enviados por ASCII y binario y se vio como reaccionaban los programas al quitar y modificar caracteristicas de cada uno, del ASCII quitando el break y el binario modificando el envio de datos. (esto lo pone el profesor para ilustración del enlazado de evidencias) Por ejemplo en la [pregunta 1](#pre1) demuestro una profundidad... porque según la rúbrica... y mi pregunta demuestra.... Nota final: 4.4
 
 
 - Criterio 2 (Excelente), calidad de la experimentación: cada experimiento tenia un proposito y era entender el funcionamiento del codigo ASCII y binario, el como se reciben y se envian los datos y ver como los interpreta el serial terminal o el msimo javasricpt, forzando errores para ver como reaccionaban. Nota final: 5.0
@@ -1014,6 +1014,7 @@ Despúes de la investigación y los datos aportados de cada unidad se pasra a ju
 
 
 **Nota final: 4.5**
+
 
 
 
