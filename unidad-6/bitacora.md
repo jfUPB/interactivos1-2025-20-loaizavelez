@@ -103,7 +103,22 @@ Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
 
 ¿Qué ocurrió en la terminal cuando ejecutaste npm install? ¿Cuál crees que es su propósito?
 
-  R//
+   R// 
+   
+   ```bash
+   Admin@DESKTOP-HIHTLMH MINGW64 ~/entangledTest-sfi1-2025-20 (main)
+$ npm install
+
+up to date, audited 121 packages in 2s
+
+17 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+
+
+   ```
 
 
 ¿Qué mensaje específico apareció en la terminal después de ejecutar npm start? ¿Qué indica este mensaje?
@@ -121,5 +136,6 @@ Describe lo que ves inicialmente en page1 y page2 en tu navegador.
   R//
 
 Describe qué sucede en ambas páginas del navegador cuando mueves una de las ventanas. ¿Cambia algo visualmente? ¿Qué mensajes aparecen (si los hay) en la consola del navegador (usualmente accesible con F12 -> Pestaña Consola) y en la terminal del servidor?
+
 
 
