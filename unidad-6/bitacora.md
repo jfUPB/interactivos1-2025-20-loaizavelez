@@ -225,16 +225,20 @@ Describe qué sucede en ambas páginas del navegador cuando mueves una de las ve
 Compara HTTP con los protocolos seriales que usaste.
 
 - ASCII/BINARIO: Se encargar de enviar carácteres empaquetados, ambos tiene un metodo distintos, en nuestros casos de estudio se investigó que son usualmentes usados para comunicaciones seriales.
-- 
+- HTTPS: El servidor se comunica con el cliente por alguna petición, por ejemplo descargar una imagen y por medio de texto se comunican. Claro no es una conversación como si estuvieras con un chat bot, más interno y no es algo que una persona pueda ver.
 
 ¿Qué similitudes encuentras?
 
-
+  R// La similitud clave es la comunicación, los 3 metodos están diseñados para comunicarse con maquinas, cada protocolo de comunicación debe tener una  aquina que pueda interpretar esa información, un micro:bit no sera capaz de leer un protocolo http porque no esta diseñado para eso.
 
 ¿Qué diferencias clave ves?
 
+Los protocolas ASCII y binarios deben enviar paquetes de carácteres HEX y un motor de busqueda no puede interpretar ese código porque no está diseñado para esa comuniación, un microbit no puede interpretar el https porque no se diseña para leer el encabezado, el nombre de dominio y la dirección.
 
 ¿Por qué crees que HTTP necesita ser más complejo que un simple envío de bytes como hacías con el micro:bit?
+
+R// Porque se debe ser más específico, si quieres descargar o ver una imagen no te basta con decir por ejemplo, quiero ver un video, debes decir que plataforma quieres ver el video, el dominio y de quien es el video, debes ser preciso con la información y un paquete binario al estar limitado a una secuencia no sera capaz de describir la petición del usuario.
+
 
 
 
