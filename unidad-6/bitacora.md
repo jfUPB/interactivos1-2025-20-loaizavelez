@@ -339,6 +339,143 @@ Experimento clave: cambia socket.broadcast.emit(‘getdata’, page1); por socke
 Después de modificar el codigo, se puede visualizar que ambos circulos no se estan sincronizando, ya no conectan las lineas a su centro, esto pasa porque no se estan comunicando, cuando se retira el broadcast deja de comunicarse, por lo tanto, esos datos se pierden o directamente no salen porque no hay nadie a quien comunicarselo
 
 
+### Actividad 4
+
+
+Refresca la página page2.html. Observa la consola del navegador. ¿Ves algún error relacionado con la conexión? ¿Qué indica?
+
+R//
+
+- Estado conectado:
+
+
+<img width="684" height="215" alt="image" src="https://github.com/user-attachments/assets/cdb01d64-a104-4211-aa9b-34571de5490f" />
+
+
+- Estado desconectado:
+
+<img width="665" height="545" alt="image" src="https://github.com/user-attachments/assets/8d1bfe5a-8365-4626-a9a5-2a96f4ca306a" />
+
+Este error indica que no logra establecer conexión con el servidor.
+
+
+Vuelve a iniciar el servidor y refresca la página. ¿Desaparecen los errores?
+
+R// Luego de conectarlo desaparecen los errores.
+
+**Experimento.**
+
+- Comenta la línea socket.emit(‘win2update’, currentPageData, socket.id); dentro del listener connect.
+
+- Reinicia el servidor y refresca page1.html y page2.html.
+
+- Mueve la ventana de page2 un poco para que envíe una actualización.
+
+¿Qué pasó? ¿Por qué?
+
+
+R// 
+
+<img width="1782" height="763" alt="image" src="https://github.com/user-attachments/assets/a9bfc418-d552-4330-950b-33775b6e4ab5" />
+
+Al comentar la linea, se ve esta situación, anteriormente cuando se elimino el **broadcast** unicamente el circulo no se sincronizaba con el de la pagina 1, pero aun asi seguia apareciendo, en este caso la pagina 2 directamente no es capaz de sincronizarse con la otra ventana. 
+
+<img width="1861" height="788" alt="image" src="https://github.com/user-attachments/assets/0a6c1927-41f3-486f-8257-26d3045b4091" />
+
+Cuando se sincroniza directamente vuelve a tener el comportamiento de cuando se elimina el broadcast.
+
+
+**Experimenta**
+
+Abre ambas páginas (es posible que ya las tengas abiertas).
+
+Mueve la ventana de page1. Observa la consola del navegador de page2. ¿Qué datos muestra?
+
+R// 
+
+<img width="697" height="527" alt="image" src="https://github.com/user-attachments/assets/1b67a505-c80e-47e1-b37d-03219cede765" />
+
+```html
+Connected with ID: uhyf4T185h7OrrFyAAAD
+page2.js:44 Received valid remote data: Object
+page2.js:51 Sync status: NOT SYNCED
+page2.js:51 Sync status: SYNCED
+page2.js:44 Received valid remote data: Object
+2page2.js:51 Sync status: SYNCED
+page2.js:44 Received valid remote data: Object
+3page2.js:51 Sync status: SYNCED
+page2.js:44 Received valid remote data: Object
+2page2.js:51 Sync status: SYNCED
+
+```
+
+Mueve la ventana de page2. Observa la consola de page1. ¿Qué pasa? ¿Por qué?
+
+R//
+
+<img width="1236" height="300" alt="image" src="https://github.com/user-attachments/assets/2c005eaf-fc05-4b6c-ac5d-acbdad361711" />
+
+```html
+Connected with ID: PKjM0QH_BO0DQYgdAAAB
+page1.js:43 Received valid remote data: Object
+2page1.js:50 Sync status: NOT SYNCED
+page1.js:43 Received valid remote data: Object
+2page1.js:50 Sync status: NOT SYNCED
+4page1.js:50 Sync status: SYNCED
+page1.js:43 Received valid remote data: Object
+2page1.js:50 Sync status: SYNCED
+334page1.js:50 Sync status: SYNCED
+```
+
+La consola la información de interes es **334page1.js:50 Sync status: SYNCED** muestra la cantidad de actualizaciones en la sincronización con la page2, no muestra el resto de datos como la posición porque esa esta incluida en la page2
+
+
+
+
+🧐🧪✍️ **Experimenta**
+
+Observa checkWindowPosition() en page2.js y modifica el código del if para comprobar si el código dentreo de este se ejecuta.
+Mueve cada ventana y observa las consolas. ¿Qué puedes concluir y por qué?
+
+R// la lineas modificadas son las siguientes:
+
+
+```js
+ currentPageData = {
+       // x: window.screenX,
+       // y: window.screenY,
+```
+
+<img width="1836" height="592" alt="image" src="https://github.com/user-attachments/assets/9cbefe25-d2f3-486f-85ef-b665f38df028" />
+
+Luego de comentar esas dos lineas, dejan de sincronizarse las paginas, esto pasa porque al no enviarse los datos de la posición de la ventana, la función del servidor de **isvalidwindowdata** deja de recibir esos datos y ya no puede validarlos.
+
+
+```js
+function isValidWindowData(data) {
+    return data && 
+           typeof data.x === 'number' && 
+           typeof data.y === 'number' && 
+           typeof data.width === 'number' && data.width > 0 &&
+           typeof data.height === 'number' && data.height > 0;
+}
+
+```
+
+otra modificación en esa función es la siguiente, se le suma por una unidad al tamaño de la ventana en ambos ejes.
+
+```js
+ currentPageData = {
+        x: window.screenX ++,
+        y: window.screenY ++,
+        width: window.innerWidth,
+        height: window.innerHeight
+```
+
+El resultado es el mismo.
+
+
+
 
 
 
