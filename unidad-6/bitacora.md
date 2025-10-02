@@ -239,6 +239,104 @@ Los protocolas ASCII y binarios deben enviar paquetes de carácteres HEX y un mo
 
 R// Porque se debe ser más específico, si quieres descargar o ver una imagen no te basta con decir por ejemplo, quiero ver un video, debes decir que plataforma quieres ver el video, el dominio y de quien es el video, debes ser preciso con la información y un paquete binario al estar limitado a una secuencia no sera capaz de describir la petición del usuario.
 
+**Piensa en una página web simple, como un formulario de login.**
+
+¿Qué parte crees que es HTML (ej. los campos de texto, el botón)?
+
+R// Un HTIML dentro de un Login puede son los campos donde debes ingresar la información vital para un inicio de sesión, si es primera vez debes llenar campos como el nombre, apellidos, localidad y luego la contraseña.
+
+¿Qué parte es CSS (ej. el color del botón, el tipo de letra)?
+
+
+R// El CSS o Cascading Style Sheets es el estilo visual que se le da a la pagína, colores de los botones, crear usuario, recordar contraseña, fuentes de letra, márgenes y otros agregados visuales como animaciones de ingreo se usuario.
+
+
+¿Qué parte es JavaScript (ej. la comprobación de si escribiste algo antes de enviar, el mensaje de “contraseña incorrecta” que aparece sin recargar la página)?
+
+R// el Java sería la verificación de los datos, si ya es una cueta existente o una contraseña incorrecta o previamente usada, es el vigilante que se encarga de ejecutar de manera ordenada los eventos de la pagína. 
+
+
+
+**Compara el bucle draw() de p5.js con este modelo de “esperar a que algo pase y reaccionar”.**
+
+¿Qué ventajas crees que tiene el modelo basado en eventos para una interfaz de usuario web?
+
+R// La diferencia con el p5.js es que siempre verifica y actualiza la aplicación, por ejemplo en el trabajo de modificar una aplicación de arte, el draw verificaba en todo momento el estado de la maquina para toda posibilidad, si se presiona un botón o si se mueve el acelerometro. Cuando se mofidica a eventos se deja el pensamiento de "Qué esta pasando" a "Qué va a pasar" al fin y al cabo es una pagína que muchas personas no van a seguir una ruta específica, algunos pueden ir directo a lo que quieren hacer, otros viajaran por las ventanas y otros se quedaran en la pagína de inicio, son muchas cosas que pueden pasar y verificar en todo momento cada estado consume muchos recursos.
+
+¿Sería eficiente tener un bucle draw() redibujando toda la página 60 veces por segundo si nada ha cambiado?
+
+R// No, no hay sentido en estar refrescando la pagína si no hay nada que haya cambiado, ademas hay que considerar que es una pagína que miles o millones de personas usaran simultaneamente, el cosnumo de recursos es excesivo e injustificado.
+
+
+¿Por qué crees que podría ser útil usar JavaScript tanto en el cliente (navegador) como en el servidor? ¿Se te ocurre alguna ventaja para los desarrolladores?
+
+R// usar el mismo lenguaje para ambos casos, cliente y servidor, permite aumentar la vida util de la aplicación o del proyecto web, si todo se centraliza en un solo tipo de lenguaje es más facil darle mantenimiento, imagina que el cliente esta hecho en **C++** o **C#** y el servidor en java, el conflicto entre datos, como carácteres, si hay un error debes modificar ambas aplicaciones para solucionarlo, por ello, centralizarlo en un solo lenguaje agiliza y mejora el ciclo de vida de la pagína web.
+
+
+Resume con tus propias palabras la diferencia fundamental entre una comunicación HTTP tradicional y una comunicación usando WebSockets/Socket.IO. ¿En qué tipo de aplicaciones has visto o podrías imaginar que se usa esta comunicación en tiempo real?
+
+R// El HTTP es una comuniación basada en peticiones, el cliente envía una petición y el servidor recibe y da la respuesta, es imperativo resaltar que es el cliente el que debe hacer la petición, el servidor no te va a dar una respuesta o una pregunta. Por otro lado, el websocket siempre esta pendiente y siempre se esta comunicando con el cliente, permitiendo respuestas en tiempo real sin tiempos de espera, es util para serivicios de mensajería **instantanea** como lo es messenger y lso mensajes directos de redes sociales o los chats de juegos en linea.
+
+
+
+Intenta acceder a http://localhost:3000/page1. ¿Funciona?
+
+
+R// <img width="322" height="101" alt="image" src="https://github.com/user-attachments/assets/0e1a2fc2-cc90-4fdb-82c3-db60edd7622f" /> 
+
+No funciona, no reconoce la dirección de la pagína.
+
+
+Ahora intenta acceder a http://localhost:3000/pagina_uno. ¿Funciona?
+
+
+R// <img width="1249" height="285" alt="image" src="https://github.com/user-attachments/assets/42a2ec9f-4bf5-4140-b2ec-cd2889eff6e4" />
+
+
+Sí, ya funciona. Ahoa ya reconoce la ruta.
+
+
+¿Qué te dice esto sobre cómo el servidor asocia URLs con respuestas? Restaura el código.
+
+Después de modificar y restaurar el codigo me doy cuenta que la ruta se define en la siguiente linea.
+
+
+```js
+app.get('/page1', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'page1.html'));
+});
+
+```
+dependiendo de la ruta que le pongas, se debe modificar en esta parte y ya te permite visualizar que al momento de refrescar la pagína te salta un error si lo midifcaste y que solo funciona si usas la nueva ruta.
+
+
+
+Mueve la ventana de page1. Observa la terminal del servidor. ¿Qué evento se registra (win1update o win2update)? ¿Qué datos (Data:) ves? ; Mueve la ventana de page2. Observa la terminal. ¿Qué evento se registra ahora? ¿Qué datos ves?
+
+los datos recibidos para page1 son:
+
+
+```bash
+Received win1update from ID: 0CLAu5CnFO6rtVMCAAAC Data: { x: -80, y: 96, width: 776, height: 744 }
+```
+
+los datos recibidos para page2 son:
+
+```bash
+Received win2update from ID: 4FkKbMIeJ8UClXU_AAAD Data: { x: 552, y: 133, width: 776, height: 747 }
+```
+
+Para ambos se registra el Identificador y la posición en el eje (x,y) y el tamaño de la ventana.
+
+
+
+
+
+Experimento clave: cambia socket.broadcast.emit(‘getdata’, page1); por socket.emit(‘getdata’, page1); (quitando broadcast). Reinicia el servidor, abre ambas páginas. Mueve page1. ¿Se actualiza la visualización en page2? ¿Por qué sí o por qué no? (Pista: ¿A quién le envía el mensaje socket.emit?). Restaura el código a broadcast.emit.
+
+[Video_experimento](https://youtu.be/p-BB4ZRbz8Q)
+
+Después de modificar el codigo, se puede visualizar que ambos circulos no se estan sincronizando, ya no conectan las lineas a su centro, esto pasa porque no se estan comunicando, cuando se retira el broadcast deja de comunicarse, por lo tanto, esos datos se pierden o directamente no salen porque no hay nadie a quien comunicarselo
 
 
 
