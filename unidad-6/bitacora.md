@@ -277,7 +277,7 @@ Resume con tus propias palabras la diferencia fundamental entre una comunicació
 
 R// El HTTP es una comuniación basada en peticiones, el cliente envía una petición y el servidor recibe y da la respuesta, es imperativo resaltar que es el cliente el que debe hacer la petición, el servidor no te va a dar una respuesta o una pregunta. Por otro lado, el websocket siempre esta pendiente y siempre se esta comunicando con el cliente, permitiendo respuestas en tiempo real sin tiempos de espera, es util para serivicios de mensajería **instantanea** como lo es messenger y lso mensajes directos de redes sociales o los chats de juegos en linea.
 
-
+### Actividad 3
 
 Intenta acceder a http://localhost:3000/page1. ¿Funciona?
 
@@ -337,6 +337,7 @@ Experimento clave: cambia socket.broadcast.emit(‘getdata’, page1); por socke
 [Video_experimento](https://youtu.be/p-BB4ZRbz8Q)
 
 Después de modificar el codigo, se puede visualizar que ambos circulos no se estan sincronizando, ya no conectan las lineas a su centro, esto pasa porque no se estan comunicando, cuando se retira el broadcast deja de comunicarse, por lo tanto, esos datos se pierden o directamente no salen porque no hay nadie a quien comunicarselo
+
 
 
 
