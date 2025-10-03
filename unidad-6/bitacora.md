@@ -101,9 +101,13 @@ Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
 
 
 
-**¿Qué ocurrió en la terminal cuando ejecutaste npm install? ¿Cuál crees que es su propósito?**
+**¿Qué ocurrió en la terminal cuando ejecutaste npm install? ¿Cuál crees que es su propósito?**    <a id="actividad1"></a>
 
-   R// al momento de ejecutar el npm install, se descargaron los 121 paquetes con las librerias necesarias para el correcto desarrollo, se auditaron los 121 paquetes, es decir, se buscan virus o errores y al final te muestra si se encontro o no una vulnerabilidad, en este caso, no se detecto ningún tipo de vulnerabilidad. <a name="Actividad_1"></a>
+   R// al momento de ejecutar el npm install, se descargaron los 121 paquetes con las librerias necesarias para el correcto desarrollo, se auditaron los 121 paquetes, es decir, se buscan virus o errores y al final te muestra si se encontro o no una vulnerabilidad, en este caso, no se detecto ningún tipo de vulnerabilidad. 
+
+
+
+
 
    
    ```bash
@@ -529,7 +533,9 @@ Desafortunadamente no puedo continuar con la parte de experimentación debido a 
 
 **Nota: 3**
 
-El apply no se realiza por complicaciones con el codigo, sin embargo, las actividades propuestas desde la 1 hasta la 4 se completaron, cada experimento y cada pregunta se respondieron, junto con pantallazos y evidencias. [Actividad _](Actividad_1) 
+El apply no se realiza por complicaciones con el codigo, sin embargo, las actividades propuestas desde la 1 hasta la 4 se completaron, cada experimento y cada pregunta se respondieron, junto con pantallazos y evidencias. [Actividad 1](#actividad1)
+
+
 
 
 
