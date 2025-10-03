@@ -472,7 +472,27 @@ otra modificación en esa función es la siguiente, se le suma por una unidad al
         height: window.innerHeight
 ```
 
-El resultado es el mismo.
+El resultado es diferente, en este caso las lineas se desincronizan, anteriormente seguian una sintonia, ahora no.
+
+[Desincronización](https://youtu.be/SmxO1xgAyjA)
+
+En este caso se modificó el condicional.
+```js
+
+ if ( previousPageData.y || 
+        currentPageData.width !== previousPageData.width || currentPageData.height !== previousPageData.height) {
+
+
+ if (currentPageData.x !== previousPageData.x || currentPageData.y !== previousPageData.y || 
+        currentPageData.width > 200 !== previousPageData.width || currentPageData.height !== previousPageData.height) {
+
+```
+
+Ocurre lo mismo, una desincronziación al momento de conectar la linea.
+
+
+
+
 
 
 
