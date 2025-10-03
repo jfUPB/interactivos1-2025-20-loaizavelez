@@ -101,7 +101,7 @@ Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
 
 
 
-**¿Qué ocurrió en la terminal cuando ejecutaste npm install? ¿Cuál crees que es su propósito?**    <a id="actividad1"></a>
+**¿Qué ocurrió en la terminal cuando ejecutaste npm install? ¿Cuál crees que es su propósito?**    <a name="actividad1"></a>
 
    R// al momento de ejecutar el npm install, se descargaron los 121 paquetes con las librerias necesarias para el correcto desarrollo, se auditaron los 121 paquetes, es decir, se buscan virus o errores y al final te muestra si se encontro o no una vulnerabilidad, en este caso, no se detecto ningún tipo de vulnerabilidad. 
 
@@ -207,7 +207,7 @@ Describe qué sucede en ambas páginas del navegador cuando mueves una de las ve
   Desplazar las ventanas permiten visualizar el comportamiento de los ciruclos, usando de referencia la esquina superior de la ventana. Se observa que se           conectan con una linea y si las ventanas se superponen se fusión en una sola ventana y ya no se ve el corte.
 
 
-### Actividad 2
+### Actividad 2 <a id="actividad2"></a>  <a name="actividad2"></a>
 
 
 
@@ -282,7 +282,7 @@ Resume con tus propias palabras la diferencia fundamental entre una comunicació
 
 R// El HTTP es una comuniación basada en peticiones, el cliente envía una petición y el servidor recibe y da la respuesta, es imperativo resaltar que es el cliente el que debe hacer la petición, el servidor no te va a dar una respuesta o una pregunta. Por otro lado, el websocket siempre esta pendiente y siempre se esta comunicando con el cliente, permitiendo respuestas en tiempo real sin tiempos de espera, es util para serivicios de mensajería **instantanea** como lo es messenger y lso mensajes directos de redes sociales o los chats de juegos en linea.
 
-### Actividad 3
+### Actividad 3  <a name="actividad3"></a>
 
 Intenta acceder a http://localhost:3000/page1. ¿Funciona?
 
@@ -344,7 +344,7 @@ Experimento clave: cambia socket.broadcast.emit(‘getdata’, page1); por socke
 Después de modificar el codigo, se puede visualizar que ambos circulos no se estan sincronizando, ya no conectan las lineas a su centro, esto pasa porque no se estan comunicando, cuando se retira el broadcast deja de comunicarse, por lo tanto, esos datos se pierden o directamente no salen porque no hay nadie a quien comunicarselo
 
 
-### Actividad 4
+### Actividad 4  <a name="actividad4"></a>
 
 
 Refresca la página page2.html. Observa la consola del navegador. ¿Ves algún error relacionado con la conexión? ¿Qué indica?
@@ -533,7 +533,8 @@ Desafortunadamente no puedo continuar con la parte de experimentación debido a 
 
 **Nota: 3**
 
-El apply no se realiza por complicaciones con el codigo, sin embargo, las actividades propuestas desde la 1 hasta la 4 se completaron, cada experimento y cada pregunta se respondieron, junto con pantallazos y evidencias. [Actividad 1](#actividad1)
+El apply no se realiza por complicaciones con el codigo, sin embargo, las actividades propuestas desde la 1 hasta la 4 se completaron, cada experimento y cada pregunta se respondieron, junto con pantallazos y evidencias. [Actividad 1](#actividad1), [Actividad 2](#actividad2), [Actividad 3](#actividad3), [Actividad 4](#actividad4)
+
 
 
 
