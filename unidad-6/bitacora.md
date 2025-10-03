@@ -103,7 +103,8 @@ Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
 
 **¿Qué ocurrió en la terminal cuando ejecutaste npm install? ¿Cuál crees que es su propósito?**
 
-   R// al momento de ejecutar el npm install, se descargaron los 121 paquetes con las librerias necesarias para el correcto desarrollo, se auditaron los 121 paquetes, es decir, se buscan virus o errores y al final te muestra si se encontro o no una vulnerabilidad, en este caso, no se detecto ningún tipo de vulnerabilidad.
+   R// al momento de ejecutar el npm install, se descargaron los 121 paquetes con las librerias necesarias para el correcto desarrollo, se auditaron los 121 paquetes, es decir, se buscan virus o errores y al final te muestra si se encontro o no una vulnerabilidad, en este caso, no se detecto ningún tipo de vulnerabilidad. <a name="Actividad_1"></a>
+
    
    ```bash
    Admin@DESKTOP-HIHTLMH MINGW64 ~/entangledTest-sfi1-2025-20 (main)
@@ -489,6 +490,47 @@ En este caso se modificó el condicional.
 ```
 
 Ocurre lo mismo, una desincronziación al momento de conectar la linea.
+
+
+**Cambia el background(220) para que dependa de la distancia entre las ventanas. Puedes calcular la magnitud del resultingVector usando let distancia = resultingVector.mag(); y luego usa map() para convertir esa distancia a un valor de gris o color. background(map(distancia, 0, 1000, 255, 0)); (ajusta el rango 0-1000 según sea necesario).**
+
+
+<img width="1907" height="932" alt="image" src="https://github.com/user-attachments/assets/304eb1f7-9c6d-462a-8bf6-0cec30d30447" />
+
+
+```c++
+   let vector1 = createVector(currentPageData.x, currentPageData.y);
+    let vector2 = createVector(remotePageData.x, remotePageData.y);
+    let resultingVector = createVector(vector2.x - vector1.x, vector2.y - vector1.y);
+    let distancia = resultingVector.mag();
+    let gris = map(distancia, 0, 1000, 255, 0); 
+    background(gris);
+
+```
+
+
+<img width="1451" height="804" alt="image" src="https://github.com/user-attachments/assets/e6b0704e-cd7c-4d39-baf1-f6db97138c7b" />
+
+
+No encuentro una explicación de porque en la page1 desaparece el circulo.
+
+
+- vector1: Representa la posición de la ventana de la page1.
+
+- vector2: Representa la posición de la ventana de la page2.
+
+- resultingVector: Es el diferencial entre ambas distancias de las ventanas.
+
+Desafortunadamente no puedo continuar con la parte de experimentación debido a errores en el codigo, ya no puede ser restaurado y debo de eliminar la carpeta y volverla a descargar, no es la primera vez que me pasa pero esta vez el codigo ya no se puede salvar.
+
+
+
+### Autoevaluación.
+
+**Nota: 3**
+
+El apply no se realiza por complicaciones con el codigo, sin embargo, las actividades propuestas desde la 1 hasta la 4 se completaron, cada experimento y cada pregunta se respondieron, junto con pantallazos y evidencias. [Actividad _](Actividad_1) 
+
 
 
 
