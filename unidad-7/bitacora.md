@@ -86,7 +86,7 @@ Explica con tus propias palabras: ¿Por qué es necesario Dev Tunnels en este es
 
 Describe la función de touchMoved() y por qué se usa la variable threshold en el cliente móvil.
 
-  R//
+  R// La función touchmoved() funciona como un evento que al presionar la pantalla del dispositivo, actualiza esa posición más reciente, guardando la pisición en (x,y) 
 
 Compara brevemente Dev Tunnels con simplemente usar la IP local. ¿Cuáles son las ventajas y desventajas de cada uno?
 
@@ -95,4 +95,5 @@ Compara brevemente Dev Tunnels con simplemente usar la IP local. ¿Cuáles son l
 Coloca en tu bitácora capturas de pantalla del sistema completo funcionando. Esto lo puedes hacer abriendo tanto el mobile como el desktop en tu computador y tomando una captura de pantalla de todos los involucrados (celular, computador y terminal)
 
   R//
+
 
