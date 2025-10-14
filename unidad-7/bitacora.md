@@ -46,8 +46,53 @@ El npm start prende el servidor local den el puerto 3000 y se pone a escuchar.
 
 
 ¿Qué mensajes observaste en la terminal del servidor al conectar el cliente de escritorio y el cliente móvil? ¿Eran diferentes los mensajes o identificadores?
+
+  R// Lo que se observa en la terminal al **Iniciarlo**:
+
+  ```bash
+  Server is listening on http://localhost:3000
+  New client connected
+  New client connected
+  ```
+
+  Al actualziar la posición tocando la pantalla: 
+
+  ```bash
+  Received message => { type: 'touch', x: 177, y: 224 }
+  Received message => { type: 'touch', x: 187, y: 240 }
+  Received message => { type: 'touch', x: 193, y: 254 }
+  Received message => { type: 'touch', x: 195, y: 267 }
+  Received message => { type: 'touch', x: 195, y: 274 }
+
+  ```
+  Te muestra la posición del touch en la posición (x,y).
+
+
 Describe el comportamiento observado: ¿Funcionó la interacción? ¿Hubo algún retraso (latencia)
+
+  R// 
+
+  [Comportamiento observado](https://youtube.com/shorts/d1YQROjEisU?feature=share)
+
+  Es funcional, hay un breve retraso al momento de desplazar el circulo por el canvas.
+
+
+### Actividad 2
+
+
+Explica con tus propias palabras: ¿Por qué es necesario Dev Tunnels en este escenario y cómo funciona conceptualmente?
+
+  R// Al correr en localhost y estar protegida la red no permite que un dispositivo externo se conecte por temas de seguridad ya que este se convierte en el mismo servidor y siempre buscara el computador. Por eso se abre un servidor en ña nube en dev tunnels. Enviando los datos atraves de este servidor, sin
+
+Describe la función de touchMoved() y por qué se usa la variable threshold en el cliente móvil.
 
   R//
 
+Compara brevemente Dev Tunnels con simplemente usar la IP local. ¿Cuáles son las ventajas y desventajas de cada uno?
+
+  R//
+
+Coloca en tu bitácora capturas de pantalla del sistema completo funcionando. Esto lo puedes hacer abriendo tanto el mobile como el desktop en tu computador y tomando una captura de pantalla de todos los involucrados (celular, computador y terminal)
+
+  R//
 
