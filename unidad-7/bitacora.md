@@ -179,13 +179,13 @@ Si conectaras dos computadores de escritorio y un móvil a este servidor, y movi
   Received message => { type: 'touch', x: 161, y: 236 }
   ```
 
-  La información que se imprimie en la termianl muestra la activación con el servidor, si un cliente se conecta o se desconecta y los datos 
-
-  
+  La información que se imprimie en la termianl muestra la activación con el servidor, si un cliente se conecta o se desconecta y los datos enviados por el touch.
 
 
+### Actividad 4
 
 
+Realiza un diagrama donde muestres el flujo completo de datos y eventos entre los tres componentes: móvil, servidor y escritorio. Puedes ilustrar con un ejemplo de coordenadas táctiles (x, y) y cómo viajan a través del sistema.
 
 
 
