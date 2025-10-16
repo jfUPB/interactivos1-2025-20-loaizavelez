@@ -163,11 +163,26 @@ Si conectaras dos computadores de escritorio y un móvil a este servidor, y movi
 
   R//
 
+  [Prueba](https://youtu.be/frDDTqNAIrI)
+
+  Luego de la prueba, a pesar de haber dos clientes que reciban los datos, no hay interferencia, ambos reciben y se actualizan a la par, esto ocurre por el ```socket.broadcast.emit('message', message);``` se encarga de enviar los datos a todos los clientes, en este caso, ambas ventanas.
+  
 ¿Qué información útil te proporcionan los mensajes console.log en el servidor durante la ejecución?
 
   R//
 
+  ```bash
+  Server is listening on http://localhost:3000
+  New client connected
+  New client connected
+  New client connected
+  Received message => { type: 'touch', x: 161, y: 236 }
+  ```
+
+  La información que se imprimie en la termianl muestra la activación con el servidor, si un cliente se conecta o se desconecta y los datos 
+
   
+
 
 
 
