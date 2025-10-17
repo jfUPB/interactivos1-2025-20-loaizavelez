@@ -1,7 +1,9 @@
 
 # Evidencias de la unidad 7
 
-### Actividad 1 <a name="Actividad 1"></a>
+### Actividad 1
+
+<a name="Actividad_1"></a>
 
 
 ¿Qué URL de Dev Tunnels obtuviste? ¿Por qué crees que necesitamos usar esta URL en lugar de http://localhost:3000 o la IP local de tu computador para que el celular se conecte?
@@ -80,6 +82,7 @@ Describe el comportamiento observado: ¿Funcionó la interacción? ¿Hubo algún
 
 ### Actividad 2
 
+<a name="Actividad_2"></a>
 
 Explica con tus propias palabras: ¿Por qué es necesario Dev Tunnels en este escenario y cómo funciona conceptualmente?
 
@@ -137,6 +140,7 @@ Coloca en tu bitácora capturas de pantalla del sistema completo funcionando. Es
 
   ### Actividad 3
 
+<a name="Actividad_3"></a>
 
 ¿Cuál es la función principal de express.static(‘public’) en este servidor? ¿Cómo se compara con el uso de app.get(‘/ruta’, …) del servidor de la Unidad 6?
 
@@ -185,6 +189,7 @@ Si conectaras dos computadores de escritorio y un móvil a este servidor, y movi
 
 ### Actividad 4
 
+<a name="Actividad_4"></a>
 
 Realiza un diagrama donde muestres el flujo completo de datos y eventos entre los tres componentes: móvil, servidor y escritorio. Puedes ilustrar con un ejemplo de coordenadas táctiles (x, y) y cómo viajan a través del sistema.
 
@@ -194,6 +199,8 @@ Realiza un diagrama donde muestres el flujo completo de datos y eventos entre lo
 
 
 ### Actividad 5 Apply 
+
+<a name="Actividad_5"></a>
 
 Diseña una aplicación interactiva que use el touch del móvil para controlar una visuales de tema musical de tu elección. Las visuales correrán en una aplicación de escritorio (desktop). Recuerda que ambas aplicaciones las construirás usando p5.js y utilizando el servidor Node.js como puente.
 
@@ -397,7 +404,9 @@ class Particle {
 
 Nota: 5
 
-Se realizaron las actividades propuestas y el apply, para ver la investigación ir a las actividades correspondientes. [Ir a sección personalizada](#Actividad 1) 
+Se realizaron las actividades propuestas y el apply, para ver la investigación ir a las actividades correspondientes. [Actividad 1](#Actividad_1) [Actividad 2](#Actividad_2) [Actividad 3](#Actividad_3) [Actividad 4](#Actividad_4) [Actividad 5](#Actividad_5)
+
+
 
 
 
