@@ -188,6 +188,218 @@ Si conectaras dos computadores de escritorio y un móvil a este servidor, y movi
 Realiza un diagrama donde muestres el flujo completo de datos y eventos entre los tres componentes: móvil, servidor y escritorio. Puedes ilustrar con un ejemplo de coordenadas táctiles (x, y) y cómo viajan a través del sistema.
 
 
+<img width="870" height="271" alt="diagrama servidor" src="https://github.com/user-attachments/assets/d654ee03-73e1-430e-89c1-889be19d27b3" />
+
+
+
+### Actividad 5 Apply 
+
+Diseña una aplicación interactiva que use el touch del móvil para controlar una visuales de tema musical de tu elección. Las visuales correrán en una aplicación de escritorio (desktop). Recuerda que ambas aplicaciones las construirás usando p5.js y utilizando el servidor Node.js como puente.
+
+
+Lo que deseo hacer con la canción AERODYNAMIC de daftpunk, es simular un festival de fuegos artificiales como se puede ver en el video original. Se buscaran crear fuegos artificiales, que la canción cambie con el ritmo de la música, que salgan naves espaciales dentro del canvas. Los cambios deben ser suaves para que no sean molestos o evidentes a la vista. [video original](https://www.youtube.com/watch?v=L93-7vRfxNs)
+
+```js
+let socket;
+let song;
+let fft;
+let fireworks = [];
+let ufos = [];
+
+let currentBgColor;
+let targetBgColor;
+let transitionProgress = 0;
+
+function preload() {
+  song = loadSound('AudioDaftPunk.wav');
+}
+
+function setup() {
+  createCanvas(300, 400);
+  socket = io();
+  fft = new p5.FFT();
+  fft.setInput(song);
+
+  currentBgColor = getRandomFuturisticColor();
+  targetBgColor = getRandomFuturisticColor();
+
+  socket.on('connect', () => {
+    console.log('Connected to server');
+  });
+
+  socket.on('message', (data) => {
+    console.log('Received message:', data);
+    if (data?.type === 'touch' && typeof data.x === 'number' && typeof data.y === 'number') {
+      if (song && !song.isPlaying()) {
+        song.play();
+      }
+
+      if (fireworks.length < 10) {
+        fireworks.push(new Firework(data.x, data.y));
+      }
+
+      // 🛸 Genera un nuevo ovni en la posición X del toque
+      ufos.push(new UFO(data.x, random(50, height - 50), random(1, 2)));
+    }
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Disconnected from server');
+  });
+
+  socket.on('connect_error', (error) => {
+    console.error('Socket.IO error:', error);
+  });
+}
+
+function draw() {
+  if (frameCount % 90 === 0) {
+    targetBgColor = getRandomFuturisticColor();
+    transitionProgress = 0;
+  }
+
+  transitionProgress = min(1, transitionProgress + 0.01);
+  let bgColor = lerpColor(currentBgColor, targetBgColor, transitionProgress);
+  currentBgColor = bgColor;
+  background(bgColor);
+
+  for (let u of ufos) {
+    u.update();
+    u.show();
+  }
+
+  for (let i = fireworks.length - 1; i >= 0; i--) {
+    fireworks[i].update();
+    fireworks[i].show();
+    if (fireworks[i].done()) {
+      fireworks.splice(i, 1);
+    }
+  }
+}
+
+function mousePressed() {
+  if (getAudioContext().state !== 'running') {
+    getAudioContext().resume().then(() => {
+      console.log("AudioContext activado");
+    });
+  }
+}
+
+function getRandomFuturisticColor() {
+  let r = random([0, 50, 100, 200]);
+  let g = random([0, 100, 255]);
+  let b = random([100, 200, 255]);
+  return color(r, g, b);
+}
+
+class UFO {
+  constructor(x, y, speed) {
+    this.x = x;
+    this.y = y;
+    this.speed = speed;
+    this.size = random(20, 40);
+    this.color = color(random(150, 255), random(150, 255), random(255));
+  }
+
+  update() {
+    this.x += this.speed;
+    if (this.x > width + 50) {
+      // Elimina el ovni cuando sale del canvas
+      this.x = -9999;
+    }
+  }
+
+  show() {
+    fill(this.color);
+    noStroke();
+    ellipse(this.x, this.y, this.size, this.size / 2);
+    fill(255, 255, 255, 100);
+    ellipse(this.x, this.y + this.size / 4, this.size / 2, this.size / 6);
+  }
+}
+
+class Firework {
+  constructor(x, y) {
+    this.particles = [];
+    for (let i = 0; i < 50; i++) {
+      this.particles.push(new Particle(x, y));
+    }
+  }
+
+  update() {
+    for (let p of this.particles) {
+      p.update();
+    }
+  }
+
+  show() {
+    for (let p of this.particles) {
+      p.show();
+    }
+  }
+
+  done() {
+    return this.particles.every(p => p.lifespan <= 0);
+  }
+}
+
+class Particle {
+  constructor(x, y) {
+    this.pos = createVector(x, y);
+    this.vel = p5.Vector.random2D().mult(random(1, 3));
+    this.lifespan = 255;
+    this.color = color(random(180, 255), random(100, 255), random(200, 255));
+  }
+
+  update() {
+    this.pos.add(this.vel);
+    this.vel.mult(0.95);
+    this.lifespan -= 4;
+  }
+
+  show() {
+    noStroke();
+    fill(this.color.levels[0], this.color.levels[1], this.color.levels[2], this.lifespan);
+    ellipse(this.pos.x, this.pos.y, 4);
+  }
+}
+
+```
+
+
+
+**HTML**
+
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Desktop p5.js Application</title>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.0/lib/p5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.0/lib/addons/p5.sound.min.js"></script>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="sketch.js" defer></script>
+</head>
+<body></body>
+</html>
+
+```
+
+
+[interacción](https://youtu.be/roCmkCT1wQw)
+
+
+### Autoevaluación.
+
+Nota: 5
+
+Se realizaron las actividades propuestas y el apply, para ver la investigación ir a las actividades correspondientes.
+
+
+
 
 
 
