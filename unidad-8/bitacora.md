@@ -17,7 +17,7 @@
 
 - Define el concepto de las visuales que quieres crear.
   
-  R// Lo que busco crear con esos referentes visuales, es dar un ambiente melancolico y derruido, la idea es usar [The day that never comes](https://youtu.be/W-ME4kkT7PU?si=phwnkEDdPKmN3QGl) de Metallica, 
+  R// Lo que busco crear con esos referentes visuales, es dar un ambiente melancolico y derruido, la idea es usar [The day that never comes](https://youtu.be/W-ME4kkT7PU?si=phwnkEDdPKmN3QGl) de Metallica, los efectps visuales se dividaron en 3, particulas, iluminación y objetos, sera localizado en un mundo arenoso.
 
 - Explica cómo el móvil y el micro:bit controlarán las visuales.
 
@@ -32,5 +32,6 @@
 - Haz un diagrama que explique cómo se comunicarán los diferentes componentes del sistema.
 
   R//
+
 
 
