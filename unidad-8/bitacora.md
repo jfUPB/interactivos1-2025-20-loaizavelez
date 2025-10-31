@@ -36,6 +36,10 @@
 
   R//
 
+  <img width="1016" height="587" alt="diagrama U8 drawio" src="https://github.com/user-attachments/assets/2a12b2e7-f852-489c-966d-8fb02d675093" />
+
+
+
 
 
 
