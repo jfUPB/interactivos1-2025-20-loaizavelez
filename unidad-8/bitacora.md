@@ -28,10 +28,14 @@
 
   R//
 
+  <img width="1920" height="1080" alt="boceto U8" src="https://github.com/user-attachments/assets/61cefae7-7ef0-4efc-ad14-d8e2a77f0e1f" />
+
+
 
 - Haz un diagrama que explique cómo se comunicarán los diferentes componentes del sistema.
 
   R//
+
 
 
 
